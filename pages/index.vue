@@ -1,5 +1,46 @@
 <template>
   <div>
-    Home
+    <h1 class="title">Welcome.</h1>
+    <div class="instruction">
+      Let's get you in the game!
+    </div>
+    <form @submit.prevent="enterLobby">
+      <label for="game">Game ID</label>
+      <input type="text" id="game" v-model="game.game_id" required>
+      <label for="player">Player ID</label>
+      <input type="text" id="player" v-model="game.player_id" required>
+      <input type="submit" value="Submit">
+    </form>
   </div>
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      game: {
+        game_id: null,
+        player_id: null
+      }
+    }
+  },
+  methods: {
+    enterLobby() {
+      this.game.game_id = this.game.game_id.replace(/\s+/g, '').toUpperCase();
+      this.$store.dispatch('setGame', this.game).then(() => {
+        this.$router.push(`/game/${this.game.game_id}`);
+      })
+    }
+  }
+}
+</script>
+
+<style scoped>
+  label {
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 0.8em;
+    text-align: left;
+    display: block;
+  }
+</style>

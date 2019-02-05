@@ -1,11 +1,27 @@
 <template>
   <div>
-    LAYOUT
-    <nuxt />
+    <TheHeader />
+    <div class="container">
+      <nuxt />
+    </div>
   </div>
 </template>
 
+<script>
+import TheHeader from '@/components/navigation/TheHeader';
+
+export default {
+  components: {
+    TheHeader
+  }  
+}
+</script>
+
 <style>
+:root {
+  --dark: #100e17;
+}
+
 html {
   font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
     Roboto, 'Helvetica Neue', Arial, sans-serif;
@@ -16,6 +32,7 @@ html {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   box-sizing: border-box;
+  text-align: center;
 }
 
 *,
@@ -23,5 +40,33 @@ html {
 *:after {
   box-sizing: border-box;
   margin: 0;
+}
+
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 1em;
+  line-height: 1.5;
+}
+
+.instruction {
+  font-size: 1.25em;
+  color: slategray;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  padding-bottom: 2em;
+  border-bottom: 1px solid #ccc;
+}
+
+input {
+  width: 100%;
+  border: 1px solid slategrey;
+  font-size: 1em;
+  padding: 0.5em;
+  margin-bottom: 1em;
+}
+input[type="submit"] {
+  background: slategray;
+  color: white;
 }
 </style>
