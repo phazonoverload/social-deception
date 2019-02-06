@@ -32,7 +32,6 @@ html {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   box-sizing: border-box;
-  text-align: center;
 }
 
 *,
@@ -68,5 +67,13 @@ input {
 input[type="submit"] {
   background: slategray;
   color: white;
+}
+
+label {
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 0.8em;
+  text-align: left;
+  display: block;
 }
 </style>

@@ -34,13 +34,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-  label {
-    text-transform: uppercase;
-    font-weight: bold;
-    font-size: 0.8em;
-    text-align: left;
-    display: block;
-  }
-</style>
