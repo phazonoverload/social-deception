@@ -57,12 +57,16 @@ html {
   border-bottom: 1px solid #ccc;
 }
 
-input {
+input,
+select {
   width: 100%;
+  display: block;
   border: 1px solid slategrey;
   font-size: 1em;
   padding: 0.5em;
   margin-bottom: 1em;
+  border-radius: 0;
+  -webkit-appearance: none;
 }
 input[type="submit"] {
   background: slategray;

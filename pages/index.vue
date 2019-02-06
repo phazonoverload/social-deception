@@ -24,12 +24,22 @@ export default {
       }
     }
   },
+  created() {
+    if(this.isInGame) {
+      this.$router.push('/game/' + this.$store.state.usersGame.game_id)
+    }
+  },
   methods: {
     enterLobby() {
       this.game.game_id = this.game.game_id.replace(/\s+/g, '').toUpperCase();
-      this.$store.dispatch('setGame', this.game).then(() => {
+      this.$store.dispatch('addUserToGame', this.game).then(() => {
         this.$router.push(`/game/${this.game.game_id}`);
       })
+    }
+  },
+  computed: {
+    isInGame() {
+      return this.$store.getters.isInGame
     }
   }
 }
