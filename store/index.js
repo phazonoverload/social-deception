@@ -27,10 +27,22 @@ export const mutations = {
 };
 
 export const actions = {
-  addUserToGame(vuexContext, payload) {
-    this.$axios.$post(vuexContext.state.baseUrl + '/users.json', payload).then(data => {
-      vuexContext.commit("addUserToGame", {...payload, firebase_id: data.name});
-      localStorage.setItem('usersGame', JSON.stringify({...payload, firebase_id: data.name}))
+  addUserToGame: async function(vuexContext, payload) {
+    // Get all users, check if there's already a game with that user. If not, create the user.
+    this.$axios.$get(vuexContext.state.baseUrl + '/users.json').then(data => {
+      let users = Object.entries(data).map(item => { return { firebase_id: item[0], ...item[1] } });
+      users = users.filter(item => { return item.game_id == payload.game_id && item.player_id == payload.player_id });
+      if(users.length == 0) {
+        this.$axios.$post(vuexContext.state.baseUrl + '/users.json', payload).then(data => {
+          vuexContext.commit("addUserToGame", {...payload, firebase_user_id: data.name});
+          localStorage.setItem('usersGame', JSON.stringify({...payload, firebase_user_id: data.name}))
+        }).catch(e => console.log(e));
+      } else {
+        let user = users[0];
+        console.log(user);
+        vuexContext.commit("addUserToGame", {...payload, firebase_user_id: user.firebase_id});
+        localStorage.setItem('usersGame', JSON.stringify({...payload, firebase_user_id: user.firebase_id}))
+      }
     }).catch(e => console.log(e));
   },
   clearGame(vuexContext) {

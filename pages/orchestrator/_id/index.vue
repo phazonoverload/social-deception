@@ -3,6 +3,7 @@
     Admin game {{game.id}}: {{firebaseId}}
     <div class="w">
       <h2>Players</h2>
+      <p>Will turn this into a table showing moves</p>
       <ul>
         <li v-for='player in players' :key='player.firebase_id'>
           {{ player.player_id }}
