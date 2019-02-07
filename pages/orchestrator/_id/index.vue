@@ -25,9 +25,6 @@ export default {
       }
     }
   },
-  created() {
-    this.$store.dispatch('adminGetGame', this.game.id);
-  },
   computed: {
     players() {
       return this.$store.getters.adminGetPlayers;

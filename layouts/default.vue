@@ -58,7 +58,8 @@ html {
 }
 
 input,
-select {
+select,
+button {
   width: 100%;
   display: block;
   border: 1px solid slategrey;
@@ -68,7 +69,8 @@ select {
   border-radius: 0;
   -webkit-appearance: none;
 }
-input[type="submit"] {
+input[type="submit"],
+button {
   background: slategray;
   color: white;
 }

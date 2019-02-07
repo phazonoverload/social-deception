@@ -65,10 +65,15 @@ export const actions = {
       }
 
       // Get all players and then filter to get just the current game players 
-      let players = Object.entries(data.users).map(item => { return { firebase_id: item[0], ...item[1] } });
-      players = players.filter(item => { return item.game_id == gameId; })
-      vuexContext.commit('setAdminGamePlayers', players);
+      if(data.users) {
+        let players = Object.entries(data.users).map(item => { return { firebase_id: item[0], ...item[1] } });
+        players = players.filter(item => { return item.game_id == gameId; })
+        vuexContext.commit('setAdminGamePlayers', players);
+      }
     })
+  },
+  adminGetPlayers(vuexContext, gameId) {
+    // GET PLAYERS HERE SO WE CAN RECALL THIS FUNCTION
   },
   adminSetGameState(vuexContext, payload) {
     this.$axios.$put(vuexContext.state.baseUrl + '/games/' + vuexContext.state.adminGame.ids.firebase_id + '.json', {
