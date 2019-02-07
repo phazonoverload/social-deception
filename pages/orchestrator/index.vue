@@ -18,9 +18,7 @@ export default {
   },
   methods: {
     enterGameLobby() {
-      this.$store.dispatch('adminGetGame', this.game_id).then(() => {
-        this.$router.push('/orchestrator/' + this.game_id);
-      })
+      this.$router.push('/orchestrator/' + this.game_id);
     },
     seedData() {
       this.$axios.$post(this.$store.state.baseUrl + '/users.json', {

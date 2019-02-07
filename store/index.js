@@ -59,21 +59,18 @@ export const actions = {
           vuexContext.commit('setAdminGameIds', { firebase_id: data.name, game_id: gameId })
         })
       } else {
-        let game = games[0];
-        vuexContext.commit('setAdminGameState', game.state);
-        vuexContext.commit('setAdminGameIds', { firebase_id: game.firebase_id, game_id: game.game_id })
-      }
-
-      // Get all players and then filter to get just the current game players 
-      if(data.users) {
-        let players = Object.entries(data.users).map(item => { return { firebase_id: item[0], ...item[1] } });
-        players = players.filter(item => { return item.game_id == gameId; })
-        vuexContext.commit('setAdminGamePlayers', players);
+        vuexContext.commit('setAdminGameState', games[0].state);
+        vuexContext.commit('setAdminGameIds', { firebase_id: games[0].firebase_id, game_id: games[0].game_id })
       }
     })
   },
   adminGetPlayers(vuexContext, gameId) {
-    // GET PLAYERS HERE SO WE CAN RECALL THIS FUNCTION
+    // Get all players and then filter to get just the current game players 
+    this.$axios.$get(vuexContext.state.baseUrl + '/users.json').then(data => {
+      let players = Object.entries(data).map(item => { return { firebase_id: item[0], ...item[1] } });
+      players = players.filter(item => { return item.game_id == gameId })
+      vuexContext.commit('setAdminGamePlayers', players);
+    })
   },
   adminSetGameState(vuexContext, payload) {
     this.$axios.$put(vuexContext.state.baseUrl + '/games/' + vuexContext.state.adminGame.ids.firebase_id + '.json', {

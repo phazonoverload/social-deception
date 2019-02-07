@@ -25,6 +25,10 @@ export default {
       }
     }
   },
+  created: async function() {
+    await this.$store.dispatch('adminGetGame', this.game.id);
+    await this.$store.dispatch('adminGetPlayers', this.game.id);
+  },
   computed: {
     players() {
       return this.$store.getters.adminGetPlayers;
