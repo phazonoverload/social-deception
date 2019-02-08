@@ -30,6 +30,7 @@ export default {
     this.pollData();
   },
   methods: {
+    // https://renatello.com/vue-js-polling-using-setinterval/
     pollData() {
       this.polling = setInterval(() => {
         this.$store.dispatch('adminGetPlayers', this.game.id);

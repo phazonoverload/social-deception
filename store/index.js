@@ -95,6 +95,9 @@ export const actions = {
       games = games.filter(item => { return item.game_id == gameId });
       vuexContext.commit('setGame', games[0]);
     })
+  },
+  vote(vuexContext, payload) {
+    this.$axios.$post(vuexContext.state.baseUrl + '/users/' + vuexContext.state.user.firebase_user_id + '/moves.json', payload).catch(e => {console.log(e);})
   }
 };
 

@@ -59,7 +59,8 @@ html {
 
 input,
 select,
-button {
+button,
+textarea {
   width: 100%;
   display: block;
   border: 1px solid slategrey;
