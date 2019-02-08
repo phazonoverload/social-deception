@@ -11,24 +11,7 @@
 
 <script>
 export default {
-  props: ['players'],
-  computed: {
-    playerList() {
-      // let list = Object.entries(this.players).map(player => { 
-      //   // let moves = Object.entries(player[1].moves).map(item => { return { firebase_id: item[0], ...item[1] } })
-      //   return { 
-      //     id: player[1].player_id, 
-      //     moves: {
-      //       ...player[1].moves
-      //     }
-      //   } 
-      // });
-      // return list;
-
-      // let players = Object.entries(data).map(item => { return { firebase_id: item[0], ...item[1] } });
-      // players = players.filter(item => { return item.game_id == gameId })
-    }
-  }
+  props: ['players']
 }
 </script>
 

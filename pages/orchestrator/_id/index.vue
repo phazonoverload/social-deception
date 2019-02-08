@@ -23,6 +23,7 @@ export default {
     }
   },
   created: async function() {
+    this.$store.dispatch('adminGetGame', this.game.id);
     this.pollData();
   },
   methods: {
