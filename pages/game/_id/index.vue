@@ -75,7 +75,11 @@ export default {
       return this.$store.getters.getUser;
     },
     showForm() {
-      return !this.voted && this.game.state.phase == 'vote';
+      if(this.game.state) {
+        return !this.voted && this.game.state.phase == 'vote';
+      } else {
+        return false;
+      }
     }
   }
 }

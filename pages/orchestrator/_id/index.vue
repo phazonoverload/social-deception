@@ -1,14 +1,9 @@
 <template>
   <div>
-    Admin game {{game.id}}: {{firebaseId}}
+    Admin game {{game.id}}
     <div class="w">
       <h2>Players</h2>
-      <p>Will turn this into a table showing moves</p>
-      <ul>
-        <li v-for='player in players' :key='player.firebase_id'>
-          {{ player.player_id }}
-        </li>
-      </ul>
+      <PlayerListing :players='players' />
     </div>
     <GameStateForm />
   </div>
@@ -16,6 +11,7 @@
 
 <script>
 import GameStateForm from '@/components/admin/GameStateForm';
+import PlayerListing from '@/components/admin/PlayerListing';
 
 export default {
   data() {
@@ -43,13 +39,11 @@ export default {
   computed: {
     players() {
       return this.$store.getters.adminGetPlayers;
-    },
-    firebaseId() {
-      return this.$store.getters.adminGetGameId;
     }
   },
   components: {
-    GameStateForm
+    GameStateForm,
+    PlayerListing
   }
 }
 </script>
