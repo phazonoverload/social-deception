@@ -21,10 +21,10 @@
       <input type="submit" value="Submit">
     </form>
     <div v-else>
-      <h2>Please chat with your partner.</h2>
-      <p>Remember that you'll need to make a choice between cooperating and defecting at the end of this round.</p>
+      <h2>Round {{game.state.round}} {{game.state.phase}}.</h2>
+      <p>Please chat with your partner. Remember that you'll need to make a choice between cooperating and defecting at the end of this round.</p>
     </div>
-    <ul id="dev">
+    <ul id="dev" v-if="game">
       <h2>Debugging</h2>
       <li>Game ID: {{game.game_id}}</li>
       <li>Game firebase ID: {{game.firebase_id}}</li>
@@ -41,8 +41,11 @@ export default {
     return {
       move: {},
       polling: null,
-      voted: false
+      voted: false,
     }
+  },
+  beforeCreate: async function() {
+    await this.$store.dispatch('getGame', this.$route.params.id);
   },
   created: async function() {
     this.pollData();

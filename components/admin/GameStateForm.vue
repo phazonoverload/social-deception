@@ -12,7 +12,7 @@
         </select>
         <input type="submit" value="Update">
       </form>
-      <div class="current">
+      <div class="current" v-if="gameState">
         <p>Current round: {{gameState.round}}</p>
         <p>Current phase: {{gameState.phase}}</p>
       </div>

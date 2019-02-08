@@ -83,4 +83,8 @@ label {
   text-align: left;
   display: block;
 }
+
+h2 {
+  text-transform: uppercase;
+}
 </style>
