@@ -20,14 +20,24 @@ import GameStateForm from '@/components/admin/GameStateForm';
 export default {
   data() {
     return {
+      polling: null,
       game: {
         id: this.$route.params.id
       }
     }
   },
   created: async function() {
-    await this.$store.dispatch('adminGetGame', this.game.id);
-    await this.$store.dispatch('adminGetPlayers', this.game.id);
+    this.pollData();
+  },
+  methods: {
+    pollData() {
+      this.polling = setInterval(() => {
+        this.$store.dispatch('adminGetPlayers', this.game.id);
+      }, 5000)
+    }
+  },
+  beforeDestroy() {
+    clearInterval(this.polling);
   },
   computed: {
     players() {
