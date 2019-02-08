@@ -4,9 +4,9 @@
     <div class="split-rounds">
       <form @submit.prevent="changeGameState">
         <label for="game-round">Game Round</label>
-        <input type="number" id="game-round" v-model="newGameState.round">
+        <input type="number" id="game-round" v-model="newGameState.round" required>
         <label for="game-phase">Game Phase</label>
-        <select id="game-phase" v-model="newGameState.phase">
+        <select id="game-phase" v-model="newGameState.phase" required>
           <option>play</option>
           <option>vote</option>
         </select>

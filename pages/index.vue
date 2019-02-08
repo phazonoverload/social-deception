@@ -26,7 +26,7 @@ export default {
   },
   created() {
     if(this.isInGame) {
-      this.$router.push('/game/' + this.$store.state.usersGame.game_id)
+      this.$router.push('/game/' + this.$store.state.userGame.game_id)
     }
   },
   methods: {

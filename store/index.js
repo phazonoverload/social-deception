@@ -1,6 +1,9 @@
+export const strict = false
+
 export const state = () => ({
   baseUrl: 'https://deceptr.firebaseio.com/',
-  usersGame: JSON.parse(localStorage.getItem('usersGame')) || undefined,
+  user: JSON.parse(localStorage.getItem('user')) || {},
+  userGame: {},
   adminGame: {
     players: [],
     ids: { firebase_id: undefined },
@@ -9,11 +12,15 @@ export const state = () => ({
 });
 
 export const mutations = {
-  addUserToGame(state, payload) {
-    state.usersGame = payload;
+  setUser(state, payload) {
+    state.user = payload;
+  },
+  setGame(state, payload) {
+    state.userGame = payload;
   },
   clearGame(state) {
-    state.usersGame = undefined;
+    state.user = {};
+    state.userGame = {};
   },
   setAdminGameIds(state, payload) {
     state.adminGame.ids = payload;
@@ -34,20 +41,20 @@ export const actions = {
       users = users.filter(item => { return item.game_id == payload.game_id && item.player_id == payload.player_id });
       if(users.length == 0) {
         this.$axios.$post(vuexContext.state.baseUrl + '/users.json', payload).then(data => {
-          vuexContext.commit("addUserToGame", {...payload, firebase_user_id: data.name});
-          localStorage.setItem('usersGame', JSON.stringify({...payload, firebase_user_id: data.name}))
+          vuexContext.commit("setUser", {...payload, firebase_user_id: data.name});
+          vuexContext.commit("setUser", {...payload, firebase_user_id: data.name});
+          localStorage.setItem('user', JSON.stringify({...payload, firebase_user_id: data.name}))
         }).catch(e => console.log(e));
       } else {
         let user = users[0];
-        console.log(user);
-        vuexContext.commit("addUserToGame", {...payload, firebase_user_id: user.firebase_id});
-        localStorage.setItem('usersGame', JSON.stringify({...payload, firebase_user_id: user.firebase_id}))
+        vuexContext.commit("setUser", {...payload, firebase_user_id: user.firebase_id});
+        localStorage.setItem('user', JSON.stringify({...payload, firebase_user_id: user.firebase_id}))
       }
     }).catch(e => console.log(e));
   },
   clearGame(vuexContext) {
     vuexContext.commit('clearGame');
-    localStorage.removeItem('usersGame');
+    localStorage.removeItem('user');
   },
   adminGetGame: async function(vuexContext, gameId) {
     await this.$axios.$get(vuexContext.state.baseUrl + '.json').then(data => {
@@ -55,7 +62,10 @@ export const actions = {
       let games = Object.entries(data.games).map(item => { return { firebase_id: item[0], ...item[1] } });
       games = games.filter(item => { return item.game_id == gameId });
       if(games.length == 0) {
-        this.$axios.$post(vuexContext.state.baseUrl + '/games.json', { game_id: gameId }).then(data => {
+        this.$axios.$post(vuexContext.state.baseUrl + '/games.json', { 
+          game_id: gameId,
+          state: { round: 0, phase: 'prep' }
+        }).then(data => {
           vuexContext.commit('setAdminGameIds', { firebase_id: data.name, game_id: gameId })
         })
       } else {
@@ -78,12 +88,26 @@ export const actions = {
       state: { phase: payload.phase, round: payload.round }
     })
     vuexContext.commit('setAdminGameState', payload);
+  },
+  getGame(vuexContext, gameId) {
+    this.$axios.$get(vuexContext.state.baseUrl + '/games.json').then(data => {
+      let games = Object.entries(data).map(item => { return { firebase_id: item[0], ...item[1] } });
+      games = games.filter(item => { return item.game_id == gameId });
+      vuexContext.commit('setGame', games[0]);
+    })
   }
 };
 
 export const getters = {
   isInGame(state) {
-    return state.usersGame != undefined;
+    // return state.userGame != {};
+    return false
+  },
+  getUser(state) {
+    return state.user;
+  },
+  getGame(state) {
+    return state.userGame;
   },
   adminGetPlayers(state) {
     return state.adminGame.players;

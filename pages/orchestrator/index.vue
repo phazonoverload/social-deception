@@ -18,6 +18,7 @@ export default {
   },
   methods: {
     enterGameLobby() {
+      this.game_id = this.game_id.replace(/\s+/g, '').toUpperCase();
       this.$router.push('/orchestrator/' + this.game_id);
     },
     seedData() {
