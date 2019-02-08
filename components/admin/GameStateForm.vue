@@ -13,13 +13,8 @@
         <input type="submit" value="Update">
       </form>
       <div class="current">
-        <div v-if="gameState">
-          <p>Current round: {{gameState.round}}</p>
-          <p>Current phase: {{gameState.phase}}</p>
-        </div>
-        <div v-else>
-          Game hasn't begun yet
-        </div>
+        <p>Current round: {{gameState.round}}</p>
+        <p>Current phase: {{gameState.phase}}</p>
       </div>
     </div>
   </div>
