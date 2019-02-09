@@ -20,11 +20,16 @@
       <textarea v-model="move.opVoteWhy" id="op-vote-why" required></textarea>
       <input type="submit" value="Submit">
     </form>
+    
     <div v-else>
-      <h2>Round {{game.state.round}} {{game.state.phase}}.</h2>
-      <p>Please chat with your partner. Remember that you'll need to make a choice between cooperating and defecting at the end of this round.</p>
+      <h2 v-if="game.state">Round {{game.state.round}} {{game.state.phase}}.</h2>
     </div>
-    <ul id="dev" v-if="game">
+    <div v-if="revealing">
+      <h2>You chose {{choices.player}}</h2>
+      <h2>Your opponent chose {{choices.opponent}}</h2>
+      <h1>Please move {{choices.score}} seats</h1>
+    </div>
+    <ul id="dev" v-if="game.state">
       <h2>Debugging</h2>
       <li>Game ID: {{game.game_id}}</li>
       <li>Game firebase ID: {{game.firebase_id}}</li>
@@ -55,6 +60,7 @@ export default {
     pollData() {
       this.polling = setInterval(() => {
         this.$store.dispatch('getGame', this.$route.params.id);
+        this.$store.dispatch('getResults', { game: this.game, player: this.player });
         if(this.voted === true && this.game.state.phase == 'play') {
           this.voted = false;
         }
@@ -77,12 +83,43 @@ export default {
     player() {
       return this.$store.getters.getUser;
     },
+    choices() {
+      let playerChoice = this.$store.getters.getPlayerMove;
+      playerChoice = playerChoice.vote;
+      let playerWord = playerChoice == 1 ? 'Cooperate' : 'Defect';
+      let opponentChoice = this.$store.getters.getOpponentMove;
+      opponentChoice = opponentChoice.vote;
+      let opponentWord = opponentChoice == 1 ? 'Cooperate' : 'Defect';
+
+      console.log(playerChoice, playerWord, opponentChoice, opponentWord);
+
+      let score;
+      if(playerChoice == 1 && opponentChoice == 1) score = this.scores.both_coop;
+      if(playerChoice == -1 && opponentChoice == -1) score = this.scores.both_defect;
+      if(playerChoice == 1 && opponentChoice == -1) score = this.scores.sucker;
+      if(playerChoice == -1 && opponentChoice == 1) score = this.scores.backstab;
+
+      return {
+        player: playerWord,
+        opponent: opponentWord,
+        score
+      }
+    },
     showForm() {
       if(this.game.state) {
         return !this.voted && this.game.state.phase == 'vote';
       } else {
         return false;
       }
+    },
+    revealing() {
+      let gameState = this.$store.getters.getGameState;
+      if(gameState) {
+        return gameState.phase == 'reveal'
+      }
+    },
+    scores() {
+      return this.$store.state.scores
     }
   }
 }

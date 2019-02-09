@@ -9,6 +9,7 @@
         <select id="game-phase" v-model="newGameState.phase" required>
           <option>play</option>
           <option>vote</option>
+          <option>reveal</option>
         </select>
         <input type="submit" value="Update">
       </form>

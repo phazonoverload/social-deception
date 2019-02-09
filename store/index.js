@@ -4,10 +4,18 @@ export const state = () => ({
   baseUrl: 'https://deceptr.firebaseio.com/',
   user: JSON.parse(localStorage.getItem('user')) || {},
   userGame: {},
+  opponentMove: {},
+  playerMove: {},
   adminGame: {
     players: [],
     ids: { firebase_id: undefined },
     state: {}
+  },
+  scores: {
+    both_coop: 1,
+    both_defect: -1,
+    backstab: 2,
+    sucker: -2
   }
 });
 
@@ -30,6 +38,12 @@ export const mutations = {
   },
   setAdminGameState(state, payload) {
     state.adminGame.state = payload;
+  },
+  setOpponentMove(state, payload) {
+    state.opponentMove = payload;
+  },
+  setPlayerMove(state, payload) {
+    state.playerMove = payload;
   }
 };
 
@@ -96,6 +110,39 @@ export const actions = {
       vuexContext.commit('setGame', games[0]);
     })
   },
+  getResults(vuexContext, payload) {
+    let round = vuexContext.state.userGame.state.round;
+    let gameId = vuexContext.state.userGame.game_id;
+    let userId = vuexContext.state.user.player_id;
+    this.$axios.$get(vuexContext.state.baseUrl + '/users.json').then(data => {
+      // Get users in current game
+      let players = Object.entries(data).map(item => { return { firebase_id: item[0], ...item[1] } });
+      players = players.filter(item => { return item.game_id == gameId })
+      
+      // Get all moves which have happened this round
+      let movesThisRound = [];
+      for(let player of players) {
+        if(player.moves) {
+          let moves = Object.entries(player.moves).map(item => { return { player_id: player.player_id, ...item[1] } });
+          for(let move of moves) {
+            if(move.round == round) movesThisRound.push(move);
+          }
+        }
+      }
+      // Get our table pos
+      let playerMove = movesThisRound.filter(move => { return move.player_id == userId; });
+
+      // Moves which match table pos, but do not match this user ID
+      let opponentMove = movesThisRound.filter(move => {
+        let tablePos = move.pos.split('.')[0];
+        let playerTablePos = playerMove[0].pos.split('.')[0];
+        return tablePos == playerTablePos && move.player_id != userId;
+      });
+      
+      vuexContext.commit('setPlayerMove', playerMove[0]);
+      vuexContext.commit('setOpponentMove', opponentMove[0])
+    })
+  },
   vote(vuexContext, payload) {
     this.$axios.$post(vuexContext.state.baseUrl + '/users/' + vuexContext.state.user.firebase_user_id + '/moves.json', payload).catch(e => {console.log(e);})
   }
@@ -109,8 +156,17 @@ export const getters = {
   getUser(state) {
     return state.user;
   },
+  getGameState(state) {
+    return state.userGame.state;
+  },
   getGame(state) {
     return state.userGame;
+  },
+  getOpponentMove(state) {
+    return state.opponentMove
+  },
+  getPlayerMove(state) {
+    return state.playerMove
   },
   adminGetPlayers(state) {
     return state.adminGame.players;
