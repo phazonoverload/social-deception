@@ -80,6 +80,27 @@ button {
   color: white;
 }
 
+.radio {
+  display: inline-block;
+}
+
+.radio input {
+  opacity: 0;
+  position: absolute;
+  pointer-events: none;
+}
+
+.radio input + label {
+  background: lightgrey;
+  display: inline-block;
+  padding: 0.5em 1em; margin-right: 0.25em;
+}
+
+.radio input:checked + label {
+  background: mediumseagreen;
+  color: white;
+}
+
 label {
   text-transform: uppercase;
   font-weight: bold;
@@ -90,5 +111,10 @@ label {
 
 h2 {
   text-transform: uppercase;
+}
+
+.toasted-container.bottom-right {
+  bottom: 20px !important;
+  right: 20px !important;
 }
 </style>

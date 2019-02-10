@@ -1,16 +1,17 @@
 <template>
   <div>
+    <h1 class="title">Orchestrator for game ID</h1>
     <!-- Admin game {{game.id}}
     <div class="w">
       <h2>Players</h2>
       <PlayerListing :players='players' />
     </div> -->
-    <GameStateForm />
+    <GameSettings />
   </div>
 </template>
 
 <script>
-import GameStateForm from '@/components/admin/GameStateForm';
+import GameSettings from '@/components/admin/GameSettings';
 import PlayerListing from '@/components/admin/PlayerListing';
 
 export default {
@@ -43,7 +44,7 @@ export default {
     }
   },
   components: {
-    GameStateForm,
+    GameSettings,
     PlayerListing
   }
 }

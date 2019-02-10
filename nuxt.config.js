@@ -42,8 +42,16 @@ module.exports = {
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
-    '@nuxtjs/pwa'
+    '@nuxtjs/pwa',
+    '@nuxtjs/toast'
   ],
+  /*
+  ** Toast config
+  */
+ toast: {
+  position: 'bottom-right',
+  duration: 2000
+ },
   /*
   ** Axios module configuration
   */
