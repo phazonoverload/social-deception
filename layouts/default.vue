@@ -41,6 +41,10 @@ html {
   margin: 0;
 }
 
+h1.title {
+  margin-bottom: 1.5rem;
+}
+
 .container {
   max-width: 960px;
   margin: 0 auto;

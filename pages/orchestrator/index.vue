@@ -1,36 +1,68 @@
 <template>
   <div id="orchestrator">
-    <form @submit.prevent="enterGameLobby">
-      <label for="game_id">Enter game</label>
-      <input type="text" v-model="game_id" id="game_id">
+    <h1 class="title">Orchestrator</h1>
+    <form @submit.prevent="enterGame">
+      <label for="game_id">Enter existing game</label>
+      <div class="input-group">
+      <select id="game_id" v-model="chosenGame">
+        <option v-for="op in games" :key="op['.key']" :value="op['.key']">{{op.name}}</option>
+      </select>
       <input type="submit" value="Submit">
+      </div>
     </form>
-    <button @click="seedData">Seed data structure</button>
+    <form @submit.prevent="createGame">
+      <label for="new_game">Create new game</label>
+      <div class="input-group">
+      <input type="text" v-model="newGameName" id="new_game" required>
+      <input type="submit" value="Submit">
+      </div>
+    </form>
   </div>
 </template>
 
 <script>
+import { db } from '~/plugins/firebase.js'
+
 export default { 
-  // data() {
-  //   return {
-  //     game_id: '',
-  //   }
-  // },
+  data() {
+    return {
+      chosenGame: '',
+      newGameName: '',
+      games: []
+    }
+  },
+  firestore() {
+    return {
+      games: db.collection('games')
+    }
+  },
   methods: {
-    enterGameLobby() {
-      // this.game_id = this.game_id.replace(/\s+/g, '').toUpperCase();
-      // this.$router.push('/orchestrator/' + this.game_id);
+    enterGame() {
+      this.$router.push('/orchestrator/' + this.chosenGame);
     },
-    seedData() {
-      // this.$axios.$post(this.$store.state.baseUrl + '/users.json', {
-      //   game_id: 1,
-      //   player_id: 1
-      // }).then(() => {
-      //   this.$axios.$post(this.$store.state.baseUrl + '/games.json', {
-      //     game_id: 1
-      //   })
-      // }).catch(e => console.log(e))
+    createGame() {
+      this.$firestore.games.add({
+        name: this.newGameName
+      });
+      this.$router.push('/orchestrator/' + this.newGameName);
     }
   }
 }
 </script>
+
+<style scoped>
+form {
+  border: 2px solid slategrey;
+  padding: 1em;
+  margin-bottom: 2em;
+}
+.input-group {
+  display: grid;
+  grid-template-columns: 4fr 1fr;
+  grid-gap: 1em;
+}
+input,
+select {
+  margin-bottom: 0;
+}
+</style>
