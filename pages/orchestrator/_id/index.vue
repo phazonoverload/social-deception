@@ -1,12 +1,8 @@
 <template>
-  <div>
-    <h1 class="title">Orchestrator for game ID</h1>
-    <!-- Admin game {{game.id}}
-    <div class="w">
-      <h2>Players</h2>
-      <PlayerListing :players='players' />
-    </div> -->
-    <GameSettings />
+  <div id="g">
+    <h1 class="title">Game Orchestrator</h1>
+    <GameSettings id="settings" />
+    <PlayerListing id="players" />
   </div>
 </template>
 
@@ -23,26 +19,6 @@ export default {
       }
     }
   },
-  created: async function() {
-    // this.$store.dispatch('adminGetGame', this.game.id);
-    // this.pollData();
-  },
-  methods: {
-    // https://renatello.com/vue-js-polling-using-setinterval/
-    // pollData() {
-    //   this.polling = setInterval(() => {
-    //     this.$store.dispatch('adminGetPlayers', this.game.id);
-    //   }, 5000)
-    // }
-  },
-  beforeDestroy() {
-    // clearInterval(this.polling);
-  },
-  computed: {
-    players() {
-      // return this.$store.getters.adminGetPlayers;
-    }
-  },
   components: {
     GameSettings,
     PlayerListing
@@ -51,10 +27,20 @@ export default {
 </script>
 
 <style scoped>
-.w {
-  border: 1px solid lightgrey;
-  margin-bottom: 1em;
-  margin-top: 1em;
-  padding: 1em;
+#g {
+  display: grid;
+  grid-gap: 1em;
+  grid-template-columns: 2fr 1fr;
+  grid-template-areas:
+    'header header' 
+    'settings players';
+}
+
+#settings {
+  grid-area: settings;
+}
+
+#players {
+  grid-area: players;
 }
 </style>
