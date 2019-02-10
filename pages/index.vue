@@ -11,8 +11,14 @@
       </select>
       <label for="user-id">User ID</label>
       <input type="text" v-model="userId" id="user-id" required>
-      <label for="score">Initial score (if entering for first time)</label>
-      <input type="number" v-model="score" id="score">
+      <div class="first">
+        <h3>Only if joining for the first time</h3>
+        <label for="side">Initial table side</label>
+        <select id="side" v-model="side">
+          <option>left</option>
+          <option>right</option>
+        </select>
+      </div>
       <input type="submit" value="Submit">
     </form>
   </div>
@@ -28,7 +34,8 @@ export default {
       users: [],
       chosenGame: '',
       userId: '',
-      score: ''
+      score: 0,
+      side: ''
     }
   },
   firestore() {
@@ -53,7 +60,8 @@ export default {
         this.$firestore.users.add({
           name: this.userId,
           game: this.chosenGame,
-          score: this.score
+          score: parseInt(this.score),
+          side: this.side
         }).then(data => {
           this.enterLobby(data.id, this.chosenGame);
         })
@@ -83,3 +91,14 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.first {
+  background: rgb(209, 209, 209);
+  padding: 1em;
+  margin-bottom: 1em;
+}
+.first h3 {
+  margin-bottom: 1em;
+}
+</style>

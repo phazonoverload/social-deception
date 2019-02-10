@@ -1,134 +1,90 @@
-<template lang="">
+<template>
   <div>
-    <!-- <form @submit.prevent="submitMove" v-if="showForm">
-      <h2 v-if="game.state">Round {{game.state.round}} voting</h2>
-      <label for="pos">What is your table position?</label>
-      <input type="text" id="pos" v-model="move.pos" required>
-      <label for="vote">What is your move this turn?</label>
-      <select v-model="move.vote" id="vote" required>
-        <option value="1">cooperate</option>
-        <option value="-1">defect</option>
-      </select>
-      <label for="vote-why">Why did you make this choice?</label>
-      <textarea v-model="move.voteWhy" id="vote-why" required></textarea>
-      <label for="op-vote">What do you think your opponent will do this turn?</label>
-      <select v-model="move.opVote" id="op-vote" required>
-        <option value="1">cooperate</option>
-        <option value="-1">defect</option>
-      </select>
-      <label for="op-vote-why">Why do you think this?</label>
-      <textarea v-model="move.opVoteWhy" id="op-vote-why" required></textarea>
-      <input type="submit" value="Submit">
-    </form>
-    
-    <div v-else>
-      <h2 v-if="game.state">Round {{game.state.round}} {{game.state.phase}}.</h2>
+    <div v-if="game.state">
+      <h1 class="title">Round {{game.state.round}}: {{game.state.phase}}</h1>
+      <div v-if="game.state.phase == 'play'">
+        <p>Have a chat with your partner. Remember that you'll both have to secretly choose whether you will cooperate or defect.</p>
+      </div>
+      <!-- <div v-if="game.state.phase == 'vote'">
+        <label for="pos">What is your table position?</label>
+        <input type="text" id="pos" v-model="move.pos" required>
+        <label for="vote">What is your move this turn?</label>
+        <select v-model="move.vote" id="vote" required>
+          <option value="1">cooperate</option>
+          <option value="-1">defect</option>
+        </select>
+        <label for="vote-why">Why did you make this choice?</label>
+        <textarea v-model="move.voteWhy" id="vote-why" required></textarea>
+        <label for="op-vote">What do you think your opponent will do this turn?</label>
+        <select v-model="move.opVote" id="op-vote" required>
+          <option value="1">cooperate</option>
+          <option value="-1">defect</option>
+        </select>
+        <label for="op-vote-why">Why do you think this?</label>
+        <textarea v-model="move.opVoteWhy" id="op-vote-why" required></textarea>
+        <input type="submit" value="Submit">
+      </div> -->
+      <div v-if="game.state.phase == 'move'">
+        <form @submit.prevent='roundEndSubmit'>
+          <label for="pos">What is your new table position?</label>
+          <input type="number" id="pos" v-model="movePos" required>
+          <input type="submit">
+        </form>
+      </div>
+      <div id="dev">
+        <h2>Debugging</h2>
+        <ul>
+          <li>User: {{user.name}} ({{user['.key']}})</li>
+          <li>Game: {{game.name}} ({{game['.key']}})</li>
+          <li>User score: {{user.score}}</li>
+        </ul>
+      </div>
     </div>
-    <div v-if="revealing">
-      <h2>You chose {{choices.player}}</h2>
-      <h2>Your opponent chose {{choices.opponent}}</h2>
-      <h1>Please move {{choices.score}} seats</h1>
-    </div>
-    <ul id="dev" v-if="game.state">
-      <h2>Debugging</h2>
-      <li>Game ID: {{game.game_id}}</li>
-      <li>Game firebase ID: {{game.firebase_id}}</li>
-      <li v-if="game.state">State: Round {{game.state.round}}: {{game.state.phase}}</li>
-      <li>Your player ID: {{player.player_id}}</li>
-      <li>Your player firebase ID: {{player.firebase_user_id}}</li>
-    </ul> -->
   </div>
 </template>
 
 <script>
+import { db } from '~/plugins/firebase.js'
+
 export default {
-  // data() {
-  //   return {
-  //     move: {},
-  //     polling: null,
-  //     voted: false,
-  //   }
-  // },
-  // beforeCreate: async function() {
-  //   await this.$store.dispatch('getGame', this.$route.params.id);
-  // },
-  // created: async function() {
-  //   this.pollData();
-  // },
-  // methods: {
-  //   // https://renatello.com/vue-js-polling-using-setinterval/
-  //   pollData() {
-  //     this.polling = setInterval(() => {
-  //       this.$store.dispatch('getGame', this.$route.params.id);
-  //       this.$store.dispatch('getResults', { game: this.game, player: this.player });
-  //       if(this.voted === true && this.game.state.phase == 'play') {
-  //         this.voted = false;
-  //       }
-  //     }, 5000)
-  //   },
-  //   submitMove() {
-  //     this.move.round = this.game.state.round;
-  //     this.$store.dispatch('vote', this.move);
-  //     this.voted = true;
-  //     this.move = {};
-  //   }
-  // },
-  // beforeDestroy() {
-  //   clearInterval(this.polling);
-  // },
-  // computed: {
-  //   game() {
-  //     return this.$store.getters.getGame;
-  //   },
-  //   player() {
-  //     return this.$store.getters.getUser;
-  //   },
-  //   choices() {
-  //     let playerChoice = this.$store.getters.getPlayerMove;
-  //     playerChoice = playerChoice.vote;
-  //     let playerWord = playerChoice == 1 ? 'Cooperate' : 'Defect';
-  //     let opponentChoice = this.$store.getters.getOpponentMove;
-  //     opponentChoice = opponentChoice.vote;
-  //     let opponentWord = opponentChoice == 1 ? 'Cooperate' : 'Defect';
-
-  //     let score;
-  //     if(playerChoice == 1 && opponentChoice == 1) score = this.scores.both_coop;
-  //     if(playerChoice == -1 && opponentChoice == -1) score = this.scores.both_defect;
-  //     if(playerChoice == 1 && opponentChoice == -1) score = this.scores.sucker;
-  //     if(playerChoice == -1 && opponentChoice == 1) score = this.scores.backstab;
-
-  //     return {
-  //       player: playerWord,
-  //       opponent: opponentWord,
-  //       score
-  //     }
-  //   },
-  //   showForm() {
-  //     if(this.game.state) {
-  //       return !this.voted && this.game.state.phase == 'vote';
-  //     } else {
-  //       return false;
-  //     }
-  //   },
-  //   revealing() {
-  //     let gameState = this.$store.getters.getGameState;
-  //     if(gameState) {
-  //       return gameState.phase == 'reveal'
-  //     }
-  //   },
-  //   scores() {
-  //     return this.$store.state.scores
-  //   }
-  // }
+  data() {
+    return {
+      game: {},
+      user: {},
+      voted: false,
+      move: {},
+      movePos: undefined
+    }
+  },
+  firestore() {
+    return {
+      game: db.collection('games').doc(this.$route.params.id),
+      user: db.collection('users').doc(this.userInState)
+    }
+  },
+  methods: {
+    roundEndSubmit() {
+      this.$firestore.user.update({
+        // scores: [...scores, parseInt(movePos)]
+        scores: {
+          ...this.user.scores,
+          [this.game.state.round]: parseInt(this.movePos)
+        },
+        score: this.user.score + parseInt(this.movePos)
+      })
+    }
+  },
+  computed: {
+    userInState() {
+      return this.$store.getters.user
+    }
+  }
 }
 </script>
 
 <style scoped>
-form {
-  margin-top: 2em;
-}
-h2 {
-  margin-bottom: 0.5em;
+h1.title {
+  text-transform: uppercase;
 }
 #dev {
   background: lightgrey;

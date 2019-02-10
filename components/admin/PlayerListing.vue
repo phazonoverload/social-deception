@@ -3,8 +3,14 @@
     <h2>Players</h2>
     <table>
       <tbody>
+        <tr>
+          <td>Name</td>
+          <td>Side</td>
+          <td>Score</td>
+        </tr>
         <tr v-for='player in players' :key="player['.key']">
           <td>{{player.name}}</td>
+          <td>{{player.side}}</td>
           <td>{{player.score}}</td>
         </tr>
       </tbody>
@@ -23,7 +29,7 @@ export default {
   },
   firestore() {
     return {
-      players: db.collection('users').where('game', '==', this.gameInStore).orderBy('score', 'desc')
+      players: db.collection('users').where('game', '==', this.gameInStore).orderBy('side', 'desc').orderBy('score', 'desc')
     }
   },
   computed: {
@@ -45,6 +51,9 @@ h2 {
 table {
   width: 100%;
   border-collapse: collapse;
+}
+tr:first-child {
+  font-weight: bold
 }
 table td {
   border-collapse: collapse;

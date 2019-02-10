@@ -4,5 +4,8 @@ export default {
   },
   game(state) {
     return state.game
+  },
+  user(state) {
+    return state.user
   }
 }

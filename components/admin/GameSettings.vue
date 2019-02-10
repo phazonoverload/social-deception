@@ -25,6 +25,10 @@
         <input type="radio" value="reveal" id="reveal" v-model="formData.state.phase">
         <label for="reveal">Reveal</label>
       </div>
+      <div class="radio">
+        <input type="radio" value="move" id="move" v-model="formData.state.phase">
+        <label for="move">Move</label>
+      </div>
       <input type="submit">
     </form>
   </div>
