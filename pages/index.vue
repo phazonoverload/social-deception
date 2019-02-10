@@ -4,40 +4,82 @@
     <div class="instruction">
       Let's get you in the game!
     </div>
-    <form @submit.prevent="enterLobby">
-      <label for="game">Game ID</label>
-      <input type="text" id="game" v-model="game.game_id" required>
-      <label for="player">Player ID</label>
-      <input type="text" id="player" v-model="game.player_id" required>
+    <form @submit.prevent="submitForm">
+      <label for="game_id">Game name</label>
+      <select id="game_id" v-model="chosenGame">
+        <option v-for="op in games" :key="op['.key']" :value="op['.key']">{{op.name}}</option>
+      </select>
+      <label for="user-id">User ID</label>
+      <input type="text" v-model="userId" id="user-id" required>
+      <label for="score">Initial score (if entering for first time)</label>
+      <input type="number" v-model="score" id="score">
       <input type="submit" value="Submit">
     </form>
   </div>
 </template>
 
 <script>
+import { db } from '~/plugins/firebase.js'
+
 export default {
   data() {
     return {
-      game: {
-        game_id: null,
-        player_id: null
-      }
+      games: [],
+      users: [],
+      chosenGame: '',
+      userId: '',
+      score: ''
+    }
+  },
+  firestore() {
+    return {
+      games: db.collection('games'),
+      users: db.collection('users')
     }
   },
   created() {
+    if(this.hasGame) {
+      this.$router.push('/game/' + this.gameInState);
+    }
   },
   methods: {
-    enterLobby() {
-      // this.game.game_id = this.game.game_id.replace(/\s+/g, '').toUpperCase();
-      // this.$store.dispatch('addUserToGame', this.game).then(() => {
-      //   this.$router.push(`/game/${this.game.game_id}`);
-      // })
+    submitForm() {
+      if(this.userExistsInGame(this.userId, this.chosenGame)) {
+        let filteredUserList = this.users.filter(user => {
+          return user.name == this.userId && user.game == this.chosenGame
+        });
+        this.enterLobby(filteredUserList[0]['.key'], this.chosenGame)
+      } else {
+        this.$firestore.users.add({
+          name: this.userId,
+          game: this.chosenGame,
+          score: this.score
+        }).then(data => {
+          this.enterLobby(data.id, this.chosenGame);
+        })
+      }
+    },
+    userExistsInGame(userId, gameId) {
+      let filteredUserList = this.users.filter(user => {
+        return user.name == userId && user.game == gameId
+      });
+      return filteredUserList.length > 0;
+    },
+    enterLobby(userId, gameId) {
+      this.$router.push('/game/' + gameId)
+      this.$store.dispatch('setGame', gameId);
+      this.$store.dispatch('setUser', userId);
+      localStorage.setItem('game', gameId);
+      localStorage.setItem('user', userId);
     }
   },
   computed: {
-    // isInGame() {
-    //   return this.$store.getters.isInGame
-    // }
+    hasGame() {
+      return this.$store.getters.hasGame
+    },
+    gameInState() {
+      return this.$store.getters.game
+    }
   }
 }
 </script>

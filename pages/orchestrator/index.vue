@@ -4,10 +4,10 @@
     <form @submit.prevent="enterGame">
       <label for="game_id">Enter existing game</label>
       <div class="input-group">
-      <select id="game_id" v-model="chosenGame">
-        <option v-for="op in games" :key="op['.key']" :value="op['.key']">{{op.name}}</option>
-      </select>
-      <input type="submit" value="Submit">
+        <select id="game_id" v-model="chosenGame">
+          <option v-for="op in games" :key="op['.key']" :value="op['.key']">{{op.name}}</option>
+        </select>
+        <input type="submit" value="Submit">
       </div>
     </form>
     <form @submit.prevent="createGame">
@@ -42,9 +42,15 @@ export default {
     },
     createGame() {
       this.$firestore.games.add({
-        name: this.newGameName
+        name: this.newGameName,
+        state: {
+          round: 1,
+          phase: 'play'
+        },
+      }).then(doc => {
+        this.$router.push('/orchestrator/' + doc.id);
       });
-      this.$router.push('/orchestrator/' + this.newGameName);
+      this.newGameName = ''
     }
   }
 }
