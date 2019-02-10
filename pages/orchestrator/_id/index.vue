@@ -3,12 +3,14 @@
     <h1 class="title">Game Orchestrator</h1>
     <GameSettings id="settings" />
     <PlayerListing id="players" />
+    <Calculator id='calculator' />
   </div>
 </template>
 
 <script>
 import GameSettings from '@/components/admin/GameSettings';
 import PlayerListing from '@/components/admin/PlayerListing';
+import Calculator from '@/components/admin/Calculator';
 
 export default {
   data() {
@@ -21,7 +23,8 @@ export default {
   },
   components: {
     GameSettings,
-    PlayerListing
+    PlayerListing,
+    Calculator
   }
 }
 </script>
@@ -33,7 +36,8 @@ export default {
   grid-template-columns: 2fr 1fr;
   grid-template-areas:
     'header header' 
-    'settings players';
+    'settings players'
+    'calculator calculator';
 }
 
 #settings {
@@ -42,5 +46,9 @@ export default {
 
 #players {
   grid-area: players;
+}
+
+#calculator {
+  grid-area: calculator
 }
 </style>

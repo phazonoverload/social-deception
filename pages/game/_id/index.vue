@@ -28,6 +28,10 @@
         <p v-else>Thanks for submitting your vote. Hang tight for the reveal.</p>
       </div>
 
+      <div v-if="game.state.phase == 'calculate'">
+        <p>We're calculating the scores now.</p>
+      </div>
+
       <div v-if="game.state.phase == 'move'">
         <form @submit.prevent='roundEndSubmit' v-if='!submittedPos'>
           <label for="pos">What is your new table position?</label>
@@ -88,13 +92,19 @@ export default {
       });
     },
     voteSubmit() {
+      this.move.vote = parseInt(this.move.vote);
       this.$firestore.user.update({
         moves: {
           ...this.user.moves,
           [this.game.state.round]: {
             ...this.move,
             position: this.user.current,
-            side: this.user.side
+            side: this.user.side,
+            outcome: {
+              opponent: 0,
+              type: '',
+              scoreDelta: 0
+            }
           }
         }
       }).then(() => {
