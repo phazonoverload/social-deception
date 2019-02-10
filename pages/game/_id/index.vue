@@ -25,11 +25,12 @@
         <input type="submit" value="Submit">
       </div> -->
       <div v-if="game.state.phase == 'move'">
-        <form @submit.prevent='roundEndSubmit'>
+        <form @submit.prevent='roundEndSubmit' v-if='!submittedPos'>
           <label for="pos">What is your new table position?</label>
           <input type="number" id="pos" v-model="movePos" required>
           <input type="submit">
         </form>
+        <p v-else>Thanks for submitting your position. Hang tight for the start of the next round.</p>
       </div>
       <div id="dev">
         <h2>Debugging</h2>
@@ -37,6 +38,7 @@
           <li>User: {{user.name}} ({{user['.key']}})</li>
           <li>Game: {{game.name}} ({{game['.key']}})</li>
           <li>User score: {{user.score}}</li>
+          <li>All scores: <span v-for='score in user.scores' :key='score'>{{score}}, </span></li>
         </ul>
       </div>
     </div>
@@ -53,7 +55,8 @@ export default {
       user: {},
       voted: false,
       move: {},
-      movePos: undefined
+      movePos: undefined,
+      submittedPos: false
     }
   },
   firestore() {
@@ -65,13 +68,13 @@ export default {
   methods: {
     roundEndSubmit() {
       this.$firestore.user.update({
-        // scores: [...scores, parseInt(movePos)]
         scores: {
           ...this.user.scores,
           [this.game.state.round]: parseInt(this.movePos)
         },
-        score: this.user.score + parseInt(this.movePos)
-      })
+        score: this.user.score + parseInt(this.movePos) 
+      });
+      this.submittedPos = true;
     }
   },
   computed: {
