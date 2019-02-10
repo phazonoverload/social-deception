@@ -39,6 +39,8 @@
           <li>Game: {{game.name}} ({{game['.key']}})</li>
           <li>User score: {{user.score}}</li>
           <li>All scores: <span v-for='score in user.scores' :key='score'>{{score}}, </span></li>
+          <li>Current pos: {{currentPosition}}</li>
+          <li>Current side: {{user.side}}</li>
         </ul>
       </div>
     </div>
@@ -73,13 +75,18 @@ export default {
           [this.game.state.round]: parseInt(this.movePos)
         },
         score: this.user.score + parseInt(this.movePos) 
+      }).then(() => {
+        this.$toast.success('Submitted successfully')
+        this.submittedPos = true; 
       });
-      this.submittedPos = true;
     }
   },
   computed: {
     userInState() {
       return this.$store.getters.user
+    },
+    currentPosition() {
+      return this.user.scores[Object.keys(this.user.scores).length - 1]
     }
   }
 }
