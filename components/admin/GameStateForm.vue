@@ -1,6 +1,6 @@
 <template>
   <div class="w">
-    <h2>Change game state</h2>
+    <!-- <h2>Change game state</h2>
     <div class="split-rounds">
       <form @submit.prevent="changeGameState">
         <label for="game-round">Game Round</label>
@@ -17,7 +17,7 @@
         <p>Current round: {{gameState.round}}</p>
         <p>Current phase: {{gameState.phase}}</p>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 

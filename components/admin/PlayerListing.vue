@@ -1,5 +1,5 @@
 <template>
-  <table>
+  <!-- <table>
     <tbody>
       <tr v-for='player in players' :key='player.firebase_id'>
         <td>{{player.player_id}}</td>
@@ -9,7 +9,8 @@
         </td>
       </tr>
     </tbody>
-  </table>
+  </table> -->
+  <div></div>
 </template>
 
 <script>

@@ -11,25 +11,25 @@
 
 <script>
 export default { 
-  data() {
-    return {
-      game_id: '',
-    }
-  },
+  // data() {
+  //   return {
+  //     game_id: '',
+  //   }
+  // },
   methods: {
     enterGameLobby() {
-      this.game_id = this.game_id.replace(/\s+/g, '').toUpperCase();
-      this.$router.push('/orchestrator/' + this.game_id);
+      // this.game_id = this.game_id.replace(/\s+/g, '').toUpperCase();
+      // this.$router.push('/orchestrator/' + this.game_id);
     },
     seedData() {
-      this.$axios.$post(this.$store.state.baseUrl + '/users.json', {
-        game_id: 1,
-        player_id: 1
-      }).then(() => {
-        this.$axios.$post(this.$store.state.baseUrl + '/games.json', {
-          game_id: 1
-        })
-      }).catch(e => console.log(e))
+      // this.$axios.$post(this.$store.state.baseUrl + '/users.json', {
+      //   game_id: 1,
+      //   player_id: 1
+      // }).then(() => {
+      //   this.$axios.$post(this.$store.state.baseUrl + '/games.json', {
+      //     game_id: 1
+      //   })
+      // }).catch(e => console.log(e))
     }
   }
 }

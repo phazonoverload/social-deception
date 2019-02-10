@@ -2,7 +2,7 @@
   <header>
     <div class="container">
       <n-link to="/">Deceptr</n-link>
-      <span @click="leaveGame" v-if='isInGame'>Leave game</span>
+      <!-- <span @click="leaveGame" v-if='isInGame'>Leave game</span> -->
     </div>
   </header>
 </template>
@@ -10,16 +10,16 @@
 <script>
 export default {
   methods: {
-    leaveGame() {
-      this.$store.dispatch('clearGame').then(() => {
-        this.$router.push('/')
-      })
-    }
+    // leaveGame() {
+    //   this.$store.dispatch('clearGame').then(() => {
+    //     this.$router.push('/')
+    //   })
+    // }
   },
   computed: {
-    isInGame() {
-      return this.$store.getters.isInGame;
-    }
+    // isInGame() {
+    //   return this.$store.getters.isInGame;
+    // }
   }
 }
 </script>

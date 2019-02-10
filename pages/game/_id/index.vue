@@ -1,6 +1,6 @@
 <template lang="">
   <div>
-    <form @submit.prevent="submitMove" v-if="showForm">
+    <!-- <form @submit.prevent="submitMove" v-if="showForm">
       <h2 v-if="game.state">Round {{game.state.round}} voting</h2>
       <label for="pos">What is your table position?</label>
       <input type="text" id="pos" v-model="move.pos" required>
@@ -36,90 +36,90 @@
       <li v-if="game.state">State: Round {{game.state.round}}: {{game.state.phase}}</li>
       <li>Your player ID: {{player.player_id}}</li>
       <li>Your player firebase ID: {{player.firebase_user_id}}</li>
-    </ul>
+    </ul> -->
   </div>
 </template>
 
 <script>
 export default {
-  data() {
-    return {
-      move: {},
-      polling: null,
-      voted: false,
-    }
-  },
-  beforeCreate: async function() {
-    await this.$store.dispatch('getGame', this.$route.params.id);
-  },
-  created: async function() {
-    this.pollData();
-  },
-  methods: {
-    // https://renatello.com/vue-js-polling-using-setinterval/
-    pollData() {
-      this.polling = setInterval(() => {
-        this.$store.dispatch('getGame', this.$route.params.id);
-        this.$store.dispatch('getResults', { game: this.game, player: this.player });
-        if(this.voted === true && this.game.state.phase == 'play') {
-          this.voted = false;
-        }
-      }, 5000)
-    },
-    submitMove() {
-      this.move.round = this.game.state.round;
-      this.$store.dispatch('vote', this.move);
-      this.voted = true;
-      this.move = {};
-    }
-  },
-  beforeDestroy() {
-    clearInterval(this.polling);
-  },
-  computed: {
-    game() {
-      return this.$store.getters.getGame;
-    },
-    player() {
-      return this.$store.getters.getUser;
-    },
-    choices() {
-      let playerChoice = this.$store.getters.getPlayerMove;
-      playerChoice = playerChoice.vote;
-      let playerWord = playerChoice == 1 ? 'Cooperate' : 'Defect';
-      let opponentChoice = this.$store.getters.getOpponentMove;
-      opponentChoice = opponentChoice.vote;
-      let opponentWord = opponentChoice == 1 ? 'Cooperate' : 'Defect';
+  // data() {
+  //   return {
+  //     move: {},
+  //     polling: null,
+  //     voted: false,
+  //   }
+  // },
+  // beforeCreate: async function() {
+  //   await this.$store.dispatch('getGame', this.$route.params.id);
+  // },
+  // created: async function() {
+  //   this.pollData();
+  // },
+  // methods: {
+  //   // https://renatello.com/vue-js-polling-using-setinterval/
+  //   pollData() {
+  //     this.polling = setInterval(() => {
+  //       this.$store.dispatch('getGame', this.$route.params.id);
+  //       this.$store.dispatch('getResults', { game: this.game, player: this.player });
+  //       if(this.voted === true && this.game.state.phase == 'play') {
+  //         this.voted = false;
+  //       }
+  //     }, 5000)
+  //   },
+  //   submitMove() {
+  //     this.move.round = this.game.state.round;
+  //     this.$store.dispatch('vote', this.move);
+  //     this.voted = true;
+  //     this.move = {};
+  //   }
+  // },
+  // beforeDestroy() {
+  //   clearInterval(this.polling);
+  // },
+  // computed: {
+  //   game() {
+  //     return this.$store.getters.getGame;
+  //   },
+  //   player() {
+  //     return this.$store.getters.getUser;
+  //   },
+  //   choices() {
+  //     let playerChoice = this.$store.getters.getPlayerMove;
+  //     playerChoice = playerChoice.vote;
+  //     let playerWord = playerChoice == 1 ? 'Cooperate' : 'Defect';
+  //     let opponentChoice = this.$store.getters.getOpponentMove;
+  //     opponentChoice = opponentChoice.vote;
+  //     let opponentWord = opponentChoice == 1 ? 'Cooperate' : 'Defect';
 
-      let score;
-      if(playerChoice == 1 && opponentChoice == 1) score = this.scores.both_coop;
-      if(playerChoice == -1 && opponentChoice == -1) score = this.scores.both_defect;
-      if(playerChoice == 1 && opponentChoice == -1) score = this.scores.sucker;
-      if(playerChoice == -1 && opponentChoice == 1) score = this.scores.backstab;
+  //     let score;
+  //     if(playerChoice == 1 && opponentChoice == 1) score = this.scores.both_coop;
+  //     if(playerChoice == -1 && opponentChoice == -1) score = this.scores.both_defect;
+  //     if(playerChoice == 1 && opponentChoice == -1) score = this.scores.sucker;
+  //     if(playerChoice == -1 && opponentChoice == 1) score = this.scores.backstab;
 
-      return {
-        player: playerWord,
-        opponent: opponentWord,
-        score
-      }
-    },
-    showForm() {
-      if(this.game.state) {
-        return !this.voted && this.game.state.phase == 'vote';
-      } else {
-        return false;
-      }
-    },
-    revealing() {
-      let gameState = this.$store.getters.getGameState;
-      if(gameState) {
-        return gameState.phase == 'reveal'
-      }
-    },
-    scores() {
-      return this.$store.state.scores
-    }
-  }
+  //     return {
+  //       player: playerWord,
+  //       opponent: opponentWord,
+  //       score
+  //     }
+  //   },
+  //   showForm() {
+  //     if(this.game.state) {
+  //       return !this.voted && this.game.state.phase == 'vote';
+  //     } else {
+  //       return false;
+  //     }
+  //   },
+  //   revealing() {
+  //     let gameState = this.$store.getters.getGameState;
+  //     if(gameState) {
+  //       return gameState.phase == 'reveal'
+  //     }
+  //   },
+  //   scores() {
+  //     return this.$store.state.scores
+  //   }
+  // }
 }
 </script>
 

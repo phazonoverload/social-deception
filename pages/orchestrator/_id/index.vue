@@ -1,10 +1,10 @@
 <template>
   <div>
-    Admin game {{game.id}}
+    <!-- Admin game {{game.id}}
     <div class="w">
       <h2>Players</h2>
       <PlayerListing :players='players' />
-    </div>
+    </div> -->
     <GameStateForm />
   </div>
 </template>
@@ -23,23 +23,23 @@ export default {
     }
   },
   created: async function() {
-    this.$store.dispatch('adminGetGame', this.game.id);
-    this.pollData();
+    // this.$store.dispatch('adminGetGame', this.game.id);
+    // this.pollData();
   },
   methods: {
     // https://renatello.com/vue-js-polling-using-setinterval/
-    pollData() {
-      this.polling = setInterval(() => {
-        this.$store.dispatch('adminGetPlayers', this.game.id);
-      }, 5000)
-    }
+    // pollData() {
+    //   this.polling = setInterval(() => {
+    //     this.$store.dispatch('adminGetPlayers', this.game.id);
+    //   }, 5000)
+    // }
   },
   beforeDestroy() {
-    clearInterval(this.polling);
+    // clearInterval(this.polling);
   },
   computed: {
     players() {
-      return this.$store.getters.adminGetPlayers;
+      // return this.$store.getters.adminGetPlayers;
     }
   },
   components: {
