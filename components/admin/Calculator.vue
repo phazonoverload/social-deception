@@ -28,32 +28,33 @@ export default {
         let players = this.users.filter(user => (user.current == i));
         players = players.map(user => ({ ...user, vote: user.moves[this.game.state.round].vote }));
 
-        let p1 = players[0].vote;
-        let p2 = players[1].vote;
+        let p1 = players[0].moves[this.game.state.round];
+        let p2 = players[1].moves[this.game.state.round];
 
-        if(p1 == 1 && p2 == 1) {
-          this.commitScore(players[0]['.key'], 1, 'both-coop', 1);
-          this.commitScore(players[1]['.key'], 1, 'both-coop', 1);
+        if(p1.vote == 1 && p2.vote == 1) {
+          this.commitScore(players[0], 1, 'both-coop', 1,);
+          this.commitScore(players[1], 1, 'both-coop', 1);
         }
-        if(p1 == -1 && p2 == -1) {
-          this.commitScore(players[0]['.key'], -1, 'both-coop', -1);
-          this.commitScore(players[1]['.key'], -1, 'both-coop', -1);
+        if(p1.vote == -1 && p2.vote == -1) {
+          this.commitScore(players[0], -1, 'both-defect', -1);
+          this.commitScore(players[1], -1, 'both-defect', -1);
         }
-        if(p1 != p2) {
+        if(p1.vote != p2.vote) {
           if(p1 == 1) {
-            this.commitScore(players[0]['.key'], -1, 'both-coop', -2);
-            this.commitScore(players[1]['.key'], 1, 'both-coop', 2);
+            this.commitScore(players[0], -1, 'suckers-luck', -2);
+            this.commitScore(players[1], 1, 'betray', 2);
           } else {
-            this.commitScore(players[0]['.key'], 1, 'both-coop', 2);
-            this.commitScore(players[1]['.key'], -1, 'both-coop', -2);
+            this.commitScore(players[0], 1, 'betray', 2);
+            this.commitScore(players[1], -1, 'suckers-luck', -2);
           }
         }
       }
     },
-    commitScore(userId, opponentScore, type, scoreDelta) {
-      db.collection('users').doc(userId).update({
+    commitScore(user, opponentScore, type, scoreDelta) {
+      db.collection('users').doc(user['.key']).update({
         moves: {
           [this.game.state.round]: {
+            ...user.moves[this.game.state.round],
             outcome: {
               opponent: opponentScore,
               scoreDelta,

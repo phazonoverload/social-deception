@@ -4,6 +4,7 @@
     <GameSettings id="settings" />
     <PlayerListing id="players" />
     <Calculator id='calculator' />
+    <CurrentRound id='current-round' />
   </div>
 </template>
 
@@ -11,6 +12,7 @@
 import GameSettings from '@/components/admin/GameSettings';
 import PlayerListing from '@/components/admin/PlayerListing';
 import Calculator from '@/components/admin/Calculator';
+import CurrentRound from '@/components/admin/CurrentRound';
 
 export default {
   data() {
@@ -24,7 +26,8 @@ export default {
   components: {
     GameSettings,
     PlayerListing,
-    Calculator
+    Calculator,
+    CurrentRound
   }
 }
 </script>
@@ -37,7 +40,8 @@ export default {
   grid-template-areas:
     'header header' 
     'settings players'
-    'calculator calculator';
+    'calculator calculator'
+    'current-round current-round';
 }
 
 #settings {
@@ -50,5 +54,9 @@ export default {
 
 #calculator {
   grid-area: calculator
+}
+
+#current-round {
+  grid-area: current-round;
 }
 </style>

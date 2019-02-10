@@ -93,7 +93,8 @@ button {
 .radio input + label {
   background: lightgrey;
   display: inline-block;
-  padding: 0.5em 1em; margin-right: 0.25em;
+  padding: 0.5em 1em; 
+  margin-right: 0.25em;
 }
 
 .radio input:checked + label {
