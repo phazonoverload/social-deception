@@ -91,8 +91,6 @@ export default {
       opponentChoice = opponentChoice.vote;
       let opponentWord = opponentChoice == 1 ? 'Cooperate' : 'Defect';
 
-      console.log(playerChoice, playerWord, opponentChoice, opponentWord);
-
       let score;
       if(playerChoice == 1 && opponentChoice == 1) score = this.scores.both_coop;
       if(playerChoice == -1 && opponentChoice == -1) score = this.scores.both_defect;
