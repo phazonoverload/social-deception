@@ -18,6 +18,10 @@ module.exports = {
     ]
   },
 
+  router: {
+    mode: 'hash'
+  },
+
   /*
   ** Customize the progress-bar color
   */
