@@ -58,7 +58,7 @@ export default {
         this.enterLobby(filteredUserList[0]['.key'], this.chosenGame)
       } else {
         this.$firestore.users.add({
-          name: this.userId,
+          name: this.userId.toUpperCase(),
           game: this.chosenGame,
           score: parseInt(this.score),
           side: this.side,

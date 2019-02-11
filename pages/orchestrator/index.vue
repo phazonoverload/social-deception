@@ -39,16 +39,18 @@ export default {
   methods: {
     enterGame() {
       this.$router.push('/orchestrator/' + this.chosenGame);
+      this.$store.dispatch('setGame', this.chosenGame);
     },
     createGame() {
       this.$firestore.games.add({
         name: this.newGameName,
         state: {
           round: 0,
-          phase: 'play'
+          phase: 'move'
         },
       }).then(doc => {
         this.$router.push('/orchestrator/' + doc.id);
+        this.$store.dispatch('setGame', this.chosenGame);
       });
       this.newGameName = ''
     }

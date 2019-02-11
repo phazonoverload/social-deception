@@ -1,12 +1,23 @@
 <template>
   <div id='current-round'>
-    <h2>Current Round</h2>
+    <h2>Current Round Votes ({{scoresIn.length}}/{{users.length}})</h2>
     <div class="list">
-      <ul>
-        <li v-for='move in scoresIn' :key='move[".key"]' :class="{active: move.outcome != {}}">
-          {{move.userName}} [{{move.side}}:{{move.pos}}] ({{move.outcome.type}})
-        </li>
-      </ul>
+      <table>
+      <tbody>
+        <tr>
+          <td>Name</td>
+          <td>Position</td>
+          <td>Voted</td>
+          <td>Result</td>
+        </tr>
+        <tr v-for='move in scoresIn' :key="move['.key']">
+          <td>{{move.userName}}</td>
+          <td>{{move.sideShort}}:{{move.pos}}</td>
+          <td>{{move.vote.vote}}</td>
+          <td>{{move.outcome.type}}</td>
+        </tr>
+      </tbody>
+    </table>
     </div>
   </div>
 </template>
@@ -28,7 +39,7 @@ export default {
     return {
       users: db.collection('users').where('game', '==', this.$route.params.id).orderBy('side', 'desc').orderBy('score', 'desc'),
       game: db.collection('games').doc(this.$route.params.id),
-      moves: db.collection('moves').where('game', '==', this.$route.params.id)
+      moves: db.collection('moves').where('game', '==', this.$route.params.id).orderBy('pos', 'asc')
     }
   },
   computed: {
@@ -38,6 +49,8 @@ export default {
     scoresIn() {
       return this.moves.filter(data => {
         return data.round == this.game.state.round
+      }).map(d => {
+        return { ...d, sideShort: d.side == 'left' ? 'l' : 'r' }
       })
     }
   }
@@ -68,23 +81,6 @@ table td {
   border-collapse: collapse;
   border: 1px solid lightgrey;
   padding: 0.5em;
-}
-ul {
-  padding-left: 0;
-  list-style-type: none;
-}
-li {
-  border: 2px solid lightgrey;
-  color: lightgrey;
-  display: inline-block;
-  padding: 0.5em 1em; 
-  margin-right: 0.5em;
   text-transform: uppercase;
-  font-weight: bold;
-  font-size: 0.8em;
-}
-li.active {
-  border-color: mediumseagreen;
-  color: mediumseagreen;
 }
 </style>

@@ -10,17 +10,29 @@
       <div v-if="game.state.phase == 'vote'">
         <form @submit.prevent="voteSubmit" v-if='!subtmittedVote'>
           <label for="vote">What is your move this turn?</label>
-          <select v-model="move.vote" id="vote" required>
-            <option value="1">cooperate</option>
-            <option value="-1">defect</option>
-          </select>
+          <div class="ops">
+            <div class="radio">
+              <input type="radio" value="-1" id="defect" v-model="move.vote">
+              <label for="defect">Defect</label>
+            </div>
+            <div class="radio">
+              <input type="radio" value="1" id="cooperate" v-model="move.vote">
+              <label for="cooperate">Cooperate</label>
+            </div>
+          </div>
           <label for="vote-why">Why did you make this choice?</label>
           <textarea v-model="move.voteWhy" id="vote-why" required></textarea>
           <label for="op-vote">What do you think your opponent will do this turn?</label>
-          <select v-model="move.opVote" id="op-vote" required>
-            <option value="1">cooperate</option>
-            <option value="-1">defect</option>
-          </select>
+          <div class="ops">
+            <div class="radio">
+              <input type="radio" value="-1" id="op-defect" v-model="move.opVote">
+              <label for="op-defect">Defect</label>
+            </div>
+            <div class="radio">
+              <input type="radio" value="1" id="op-cooperate" v-model="move.opVote">
+              <label for="op-cooperate">Cooperate</label>
+            </div>
+          </div>
           <label for="op-vote-why">Why do you think this?</label>
           <textarea v-model="move.opVoteWhy" id="op-vote-why" required></textarea>
           <input type="submit" value="Submit">
@@ -95,6 +107,7 @@ export default {
         current: parseInt(this.movePos)
       }).then(() => {
         this.$toast.success('Submitted successfully')
+        this.movePos = '';
         this.submittedPos = true;
         this.subtmittedVote = false; 
       });
@@ -114,6 +127,7 @@ export default {
         this.$toast.success('Successfully voted')
         this.subtmittedVote = true;
         this.submittedPos = false;
+        this.move = {};
       })
       
     }
@@ -151,5 +165,19 @@ h1.title {
 }
 h2.reveal {
   margin: 1em 0;
+}
+.ops {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 2em;
+}
+.radio {
+  margin-bottom: 1em;
+  margin-top: 0.25em;
+}
+.radio label {
+  width: 100%;
+  text-align: center;
+  padding: 1em;
 }
 </style>

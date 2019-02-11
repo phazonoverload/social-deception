@@ -2,17 +2,17 @@
   <div id="g">
     <h1 class="title">Game Orchestrator</h1>
     <GameSettings id="settings" />
-    <PlayerListing id="players" />
     <Calculator id='calculator' />
     <CurrentRound id='current-round' />
+    <MovementTracker id='tracker' />
   </div>
 </template>
 
 <script>
 import GameSettings from '@/components/admin/GameSettings';
-import PlayerListing from '@/components/admin/PlayerListing';
 import Calculator from '@/components/admin/Calculator';
 import CurrentRound from '@/components/admin/CurrentRound';
+import MovementTracker from '@/components/admin/MovementTracker';
 
 export default {
   data() {
@@ -25,38 +25,36 @@ export default {
   },
   components: {
     GameSettings,
-    PlayerListing,
     Calculator,
-    CurrentRound
+    CurrentRound,
+    MovementTracker
   }
 }
 </script>
 
 <style scoped>
-#g {
-  display: grid;
-  grid-gap: 1em;
-  grid-template-columns: 2fr 1fr;
-  grid-template-areas:
-    'header header' 
-    'settings players'
-    'calculator calculator'
-    'current-round current-round';
-}
-
 #settings {
   grid-area: settings;
+  margin-bottom: 2em;
 }
 
 #players {
   grid-area: players;
+  margin-bottom: 2em;
 }
 
 #calculator {
-  grid-area: calculator
+  grid-area: calculator;
+  margin-bottom: 2em;
 }
 
 #current-round {
   grid-area: current-round;
+  margin-bottom: 2em;
+}
+
+#tracker {
+  grid-area: tracker;
+  margin-bottom: 2em;
 }
 </style>

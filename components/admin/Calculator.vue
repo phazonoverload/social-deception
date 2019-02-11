@@ -24,10 +24,9 @@ export default {
   methods: {
     calculate() {
       for(let i = 1; i < this.game.seats + 1; i++) {
-        let players = this.moves.filter(move => (move.round == i));
-        let p1 = players[0];
-        let p2 = players[1];
-
+        let players = this.moves.filter(move => (move.round == this.game.state.round && move.pos == i));
+        let p1 = players[0].vote;
+        let p2 = players[1].vote;
         if(p1.vote == 1 && p2.vote == 1) {
           this.commitScore(players[0], 1, 'both-coop', 1,);
           this.commitScore(players[1], 1, 'both-coop', 1);
@@ -37,7 +36,7 @@ export default {
           this.commitScore(players[1], -1, 'both-defect', -1);
         }
         if(p1.vote != p2.vote) {
-          if(p1 == 1) {
+          if(p1.vote == 1) {
             this.commitScore(players[0], -1, 'suckers-luck', -2);
             this.commitScore(players[1], 1, 'betray', 2);
           } else {
@@ -46,6 +45,9 @@ export default {
           }
         }
       }
+
+
+      // VOTE ERROR
     },
     commitScore(move, opponentScore, type, scoreDelta) {
       db.collection('moves').doc(move['.key']).update({
