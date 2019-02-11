@@ -3,8 +3,8 @@
     <h2>Current Round</h2>
     <div class="list">
       <ul>
-        <li v-for='player in players' :key='player[".key"]' :class="{active: player.madeMove}">
-          {{player.name}}
+        <li v-for='move in scoresIn' :key='move[".key"]' :class="{active: move.outcome != {}}">
+          {{move.userName}} [{{move.side}}:{{move.pos}}] ({{move.outcome.type}})
         </li>
       </ul>
     </div>
@@ -18,24 +18,26 @@ export default {
   data() {
     return {
       users: {},
-      game: {}
+      game: {
+        state: { round: 0 }
+      },
+      moves: {}
     }
   },
   firestore() {
     return {
       users: db.collection('users').where('game', '==', this.$route.params.id).orderBy('side', 'desc').orderBy('score', 'desc'),
-      game: db.collection('games').doc(this.$route.params.id)
+      game: db.collection('games').doc(this.$route.params.id),
+      moves: db.collection('moves').where('game', '==', this.$route.params.id)
     }
   },
   computed: {
-    players() {
-      return this.users.map(data => {
-        let round = 0;
-        if(this.game.state) round = this.game.state.round;
-        return {
-          name: data.name,
-          madeMove: data.moves.hasOwnProperty(round.toString())
-        };
+    userInStore() {
+      return this.$store.getters.user;
+    },
+    scoresIn() {
+      return this.moves.filter(data => {
+        return data.round == this.game.state.round
       })
     }
   }

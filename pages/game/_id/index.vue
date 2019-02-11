@@ -32,6 +32,12 @@
         <p>We're calculating the scores now.</p>
       </div>
 
+      <div v-if="game.state.phase == 'reveal'">
+        <p>Your opponent chose to {{currentMove.outcome.opVote}}</p>
+        <h2 class='reveal'>Your move was {{currentMove.outcome.type}}</h2>
+        <p>Please move {{currentMove.outcome.scoreDelta}} seats</p>
+      </div>
+
       <div v-if="game.state.phase == 'move'">
         <form @submit.prevent='roundEndSubmit' v-if='!submittedPos'>
           <label for="pos">What is your new table position?</label>
@@ -47,7 +53,7 @@
           <li>User: {{user.name}} ({{user['.key']}})</li>
           <li>Game: {{game.name}} ({{game['.key']}})</li>
           <li>User score: {{user.score}}</li>
-          <li>All scores: <span v-for='score in user.scores' :key='score'>{{score}}, </span></li>
+          <li>All scores: <span v-for='(score, i) in user.scores' :key='i'>{{score}}, </span></li>
           <li>Current pos: {{user.current}}</li>
           <li>Current side: {{user.side}}</li>
         </ul>
@@ -98,6 +104,7 @@ export default {
       this.$firestore.moves.add({
         game: this.$route.params.id,
         user: this.userInState,
+        userName: this.user.name,
         pos: this.user.current,
         side: this.user.side,
         round: this.game.state.round,
@@ -114,6 +121,18 @@ export default {
   computed: {
     userInState() {
       return this.$store.getters.user
+    },
+    currentMove() {
+      let m = this.moves.filter(move => {
+        return move.round == this.game.state.round && move.user == this.userInState
+      })[0];
+      return {
+        ...m,
+        outcome: {
+          ...m.outcome,
+          opVote: m.outcome.opponent == 1 ? 'cooperate' : 'defect'
+        }
+      }
     }
   }
 }
@@ -129,5 +148,8 @@ h1.title {
   padding: 1em;
   list-style-type: none;
   margin-top: 2em;
+}
+h2.reveal {
+  margin: 1em 0;
 }
 </style>
