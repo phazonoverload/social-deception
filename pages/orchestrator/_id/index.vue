@@ -4,7 +4,7 @@
     <GameSettings id="settings" />
     <PlayerListing id="players" />
     <Calculator id='calculator' />
-    <CurrentRound id='current-round' />
+    <!-- <CurrentRound id='current-round' /> -->
   </div>
 </template>
 

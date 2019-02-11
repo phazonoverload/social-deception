@@ -64,6 +64,7 @@ export default {
     return {
       game: {},
       user: {},
+      moves: {},
       move: {},
       movePos: undefined,
       submittedPos: false,
@@ -73,7 +74,8 @@ export default {
   firestore() {
     return {
       game: db.collection('games').doc(this.$route.params.id),
-      user: db.collection('users').doc(this.userInState)
+      user: db.collection('users').doc(this.userInState),
+      moves: db.collection('moves')
     }
   },
   methods: {
@@ -93,20 +95,13 @@ export default {
     },
     voteSubmit() {
       this.move.vote = parseInt(this.move.vote);
-      this.$firestore.user.update({
-        moves: {
-          ...this.user.moves,
-          [this.game.state.round]: {
-            ...this.move,
-            position: this.user.current,
-            side: this.user.side,
-            outcome: {
-              opponent: 0,
-              type: '',
-              scoreDelta: 0
-            }
-          }
-        }
+      this.$firestore.moves.add({
+        game: this.$route.params.id,
+        user: this.userInState,
+        pos: this.user.current,
+        side: this.user.side,
+        vote: { ...this.move },
+        result: {}
       }).then(() => {
         this.$toast.success('Successfully voted')
         this.subtmittedVote = true;

@@ -62,7 +62,6 @@ export default {
           game: this.chosenGame,
           score: parseInt(this.score),
           side: this.side,
-          moves: { 0: { vote: 0 } }
         }).then(data => {
           this.enterLobby(data.id, this.chosenGame);
         })
