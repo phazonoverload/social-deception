@@ -100,8 +100,9 @@ export default {
         user: this.userInState,
         pos: this.user.current,
         side: this.user.side,
+        round: this.game.state.round,
         vote: { ...this.move },
-        result: {}
+        outcome: {}
       }).then(() => {
         this.$toast.success('Successfully voted')
         this.subtmittedVote = true;
