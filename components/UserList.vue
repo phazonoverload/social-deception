@@ -8,11 +8,11 @@
         <th>Side</th>
         <th>Voting Record</th>
       </tr>
-      <tr v-for='user in this.users' :key='user[".key"]'>
+      <tr v-for='user in usersFull' :key='user[".key"]'>
         <td>{{user.name}}</td>
         <td>{{user.score}}</td>
         <td>{{user.side}}</td>
-        <td>-</td>
+        <td>{{user.votes}}</td>
       </tr>
     </table>
   </div>
@@ -20,6 +20,23 @@
 
 <script>
 export default {
-  props: ['users']
+  computed: {
+    usersFull() {
+      let u = []
+      for(let user of this.users) {
+        const userVotes = this.votes.filter(vote => {
+          return vote.userId == user['.key']
+        })
+        .sort((a, b) => (a.round > b.round) ? 1 : -1)
+        .map(e => `[${e.round}: ${e.vote.playerVote}]`).join(', ').toUpperCase();
+        u.push({
+          ...user,
+          votes: userVotes
+        })
+      }
+      return u;
+    }
+  },
+  props: ['users', 'votes']
 }
 </script>

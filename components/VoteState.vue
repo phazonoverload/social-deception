@@ -22,11 +22,11 @@
         <label for="op-vote">What do you think your opponent will do this turn?</label>
         <div class="ops">
           <div class="radio">
-            <input type="radio" value="-1" id="op-defect" v-model="form.expectedOpponentVote">
+            <input type="radio" value="d" id="op-defect" v-model="form.expectedOpponentVote">
             <label for="op-defect">Defect</label>
           </div>
           <div class="radio">
-            <input type="radio" value="1" id="op-cooperate" v-model="form.expectedOpponentVote">
+            <input type="radio" value="c" id="op-cooperate" v-model="form.expectedOpponentVote">
             <label for="op-cooperate">Cooperate</label>
           </div>
         </div>
