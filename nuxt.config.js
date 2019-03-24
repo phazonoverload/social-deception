@@ -42,7 +42,20 @@ export default {
   ** Nuxt.js modules
   */
   modules: [
+    '@nuxtjs/toast'
   ],
+
+  /*
+  ** Toast config
+  */
+  toast: {
+    position: 'bottom-right',
+    duration: 2000
+  },
+
+  router: {
+    mode: 'hash'
+  },
 
   /*
   ** Build configuration
