@@ -16,7 +16,7 @@ export default {
   },
   firestore() {
     return {
-      game: db.collection('games').doc(this.$route.params.game),
+      game: db.collection('games').doc(this.$route.params.game)
     }
   },
 }
