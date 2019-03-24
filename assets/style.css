@@ -48,3 +48,8 @@ th, td {
 .input-group {
   display: block;
 }
+
+.radio {
+  display: inline-block;
+  margin-left: 1em;
+}

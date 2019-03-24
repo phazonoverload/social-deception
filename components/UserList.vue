@@ -6,12 +6,14 @@
         <th>Name</th>
         <th>Score</th>
         <th>Side</th>
+        <th>Seat</th>
         <th>Voting Record</th>
       </tr>
       <tr v-for='user in usersFull' :key='user[".key"]'>
         <td>{{user.name}}</td>
         <td>{{user.score}}</td>
         <td>{{user.side}}</td>
+        <td>{{user.seat}}</td>
         <td>{{user.votes}}</td>
       </tr>
     </table>

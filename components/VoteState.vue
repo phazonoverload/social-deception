@@ -44,12 +44,9 @@
 
 <script>
 export default {
-  created() {
-    this.submittedVote = false;  
-  },
   data() {
     return {
-      submittedVote: false,
+      submittedVote: localStorage.getItem('submittedVote') || false,
       form: {}
     }
   },
@@ -69,6 +66,7 @@ export default {
         outcome: {}
       }).then(() => {
         this.submittedVote = true;
+        localStorage.setItem('submittedVote', true)
         this.vote = {};
       })
     }

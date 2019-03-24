@@ -63,7 +63,8 @@ export default {
           name: userId,
           game: gameId,
           score: parseInt(score),
-          side: side
+          side: side,
+          seat: parseInt(score)
         }).then(res => {
           this.enterLobby(gameId, res.id);
         })
