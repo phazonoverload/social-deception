@@ -1,0 +1,20 @@
+<template>
+  <header>
+    <span class='brand'>Axelrod</span>
+  </header>
+</template>
+
+<style scoped>
+header {
+  background: var(--dark);
+  color: white;
+  padding: 0.5em;
+}
+header * {
+  color: white;
+}
+.brand {
+  text-transform: uppercase;
+  font-weight: bold;
+}
+</style>

@@ -1,0 +1,27 @@
+:root {
+  --font: 'Inter UI var alt', sans-serif;
+  --blue: #3f46ad;
+  --red: #d31d53;
+  --green: #01684f;
+  --dark: #222;
+  --light: #f4f4f4;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  color: inherit;
+}
+
+html {
+  font-family: var(--font);
+  line-height: 1.5;
+  color: var(--dark); 
+}
+
+#page {
+  padding: 2em 1em;
+  margin: 0 auto;
+  max-width: 960px;
+}

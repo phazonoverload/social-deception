@@ -1,7 +1,6 @@
 <template>
   <div>
-    <h1>Home</h1>
-    <n-link to='/1'>Game 1</n-link>
+    <h1>Admin Home</h1>
   </div>
 </template>
 

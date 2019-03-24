@@ -12,7 +12,10 @@
   },
   "dependencies": {
     "cross-env": "^5.2.0",
-    "nuxt": "^2.4.0"
+    "firebase": "^5.9.1",
+    "nuxt": "^2.4.0",
+    "vue-firestore": "^0.3.21",
+    "vue-toastr": "^2.0.16"
   },
   "devDependencies": {
     "nodemon": "^1.18.9"
