@@ -30,3 +30,17 @@ html {
   bottom: 20px !important;
   right: 20px !important;
 }
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+table, th, td {
+  border: 1px solid var(--dark);
+  text-align: left;
+}
+
+th, td {
+  padding: 0.5em;
+}
