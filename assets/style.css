@@ -44,3 +44,7 @@ table, th, td {
 th, td {
   padding: 0.5em;
 }
+
+.input-group {
+  display: block;
+}
