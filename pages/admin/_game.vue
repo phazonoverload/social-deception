@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>Admin Game Single</h1>
-    <GameSettings :game='game' />
+    <GameSettings :game='game' :fire='$firestore' v-if='game.state' />
     <!-- <UserList :users='users' /> -->
   </div>
 </template>

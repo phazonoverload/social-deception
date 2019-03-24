@@ -25,3 +25,8 @@ html {
   margin: 0 auto;
   max-width: 960px;
 }
+
+.toasted-container.bottom-right {
+  bottom: 20px !important;
+  right: 20px !important;
+}
