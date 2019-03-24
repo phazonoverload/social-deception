@@ -59,12 +59,14 @@ export default {
       if(userExistsInGame) {
         this.enterLobby(gameId, userExistsInGame);
       } else {
+        const s = parseInt(score);
         this.$firestore.users.add({
           name: userId,
           game: gameId,
-          score: parseInt(score),
+          score: s,
           side: side,
-          seat: parseInt(score)
+          seat: s,
+          scores: { 0: s }
         }).then(res => {
           this.enterLobby(gameId, res.id);
         })
