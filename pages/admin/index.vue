@@ -41,7 +41,7 @@ export default {
   methods: {
     enterGame() {
       this.$router.push('/admin/' + this.chosenGame);
-      this.$store.dispatch('setGame', this.chosenGame);
+      this.$store.dispatch('setGameId', this.chosenGame);
     },
     createGame() {
       this.$firestore.games.add({
@@ -53,7 +53,7 @@ export default {
       }).then(doc => {
         console.log(doc);
         this.$router.push('/admin/' + doc.id);
-        this.$store.dispatch('setGame', doc.id);
+        this.$store.dispatch('setGameId', doc.id);
       });
       this.newGameName = ''
     }
