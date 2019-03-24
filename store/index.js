@@ -1,16 +1,23 @@
 export const state = () => ({
-  game: undefined
+  gameId: undefined,
+  game: {}
 });
 
 export const mutations = {
-  setGame(vuexContext, id) {
-    vuexContext.game = id;
+  setGameId(vuexContext, id) {
+    vuexContext.gameId = id;
+  },
+  setGame(vuexContext, game) {
+    vuexContext.game = game;
   },
 }
 
 export const actions = {
-  setGame(vuexContext, id) {
-    vuexContext.commit('setGame', id);
+  setGameId(vuexContext, id) {
+    vuexContext.commit('setGameId', id);
+  },
+  setGame(vuexContext, game) {
+    vuexContext.commit('setGame', game);
   },
 }
 

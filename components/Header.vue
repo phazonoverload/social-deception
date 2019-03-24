@@ -1,6 +1,6 @@
 <template>
   <header>
-    <span class='brand'>Axelrod</span>
+    <n-link to='/' class='brand'>Axelrod</n-link>
   </header>
 </template>
 
@@ -16,5 +16,6 @@ header * {
 .brand {
   text-transform: uppercase;
   font-weight: bold;
+  text-decoration: none;
 }
 </style>
