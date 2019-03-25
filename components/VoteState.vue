@@ -4,11 +4,11 @@
       <div class="input-group">
         <label for="vote">What is your move this turn?</label>
         <div class="ops">
-          <div class="radio">
+          <div class="radio d">
             <input type="radio" value="d" id="defect" v-model="form.playerVote">
             <label for="defect">Defect</label>
           </div>
-          <div class="radio">
+          <div class="radio c">
             <input type="radio" value="c" id="cooperate" v-model="form.playerVote">
             <label for="cooperate">Cooperate</label>
           </div>
@@ -21,11 +21,11 @@
       <div class="input-group">
         <label for="op-vote">What do you think your opponent will do this turn?</label>
         <div class="ops">
-          <div class="radio">
+          <div class="radio d">
             <input type="radio" value="d" id="op-defect" v-model="form.expectedOpponentVote">
             <label for="op-defect">Defect</label>
           </div>
-          <div class="radio">
+          <div class="radio c">
             <input type="radio" value="c" id="op-cooperate" v-model="form.expectedOpponentVote">
             <label for="op-cooperate">Cooperate</label>
           </div>
@@ -46,7 +46,7 @@
 export default {
   data() {
     return {
-      submittedVote: localStorage.getItem('submittedVote') || false,
+      submittedVote: false,
       form: {}
     }
   },
@@ -66,7 +66,6 @@ export default {
         outcome: {}
       }).then(() => {
         this.submittedVote = true;
-        localStorage.setItem('submittedVote', true)
         this.vote = {};
       })
     }
@@ -74,3 +73,12 @@ export default {
   props: ['user', 'fire', 'game']
 }
 </script>
+
+<style scoped>
+.radio.d input:checked + label {
+  background: var(--red);
+}
+.radio.c input:checked + label {
+  background: var(--green);
+}
+</style>

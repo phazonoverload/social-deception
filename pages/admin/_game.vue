@@ -3,6 +3,7 @@
     <h1>Admin Game Single</h1>
     <GameSettings :game='game' :fire='$firestore' v-if='game.state' />
     <UserList :users='users' :votes='votes' />
+    <CalculateScores :users='users' :votes='votes' />
   </div>
 </template>
 
@@ -10,6 +11,7 @@
 import { db } from '~/plugins/firebase.js'
 import UserList from '~/components/UserList'
 import GameSettings from '~/components/GameSettings'
+import CalculateScores from '~/components/CalculateScores'
 
 export default {
   data() {
@@ -28,7 +30,8 @@ export default {
   },
   components: {
     UserList,
-    GameSettings
+    GameSettings,
+    CalculateScores
   }
 }
 </script>
