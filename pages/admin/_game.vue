@@ -3,7 +3,7 @@
     <h1>Admin Game Single</h1>
     <GameSettings :game='game' :fire='$firestore' v-if='game.state' />
     <UserList :users='users' :votes='votes' />
-    <CalculateScores :users='users' :votes='votes' />
+    <CalculateScores :users='users' :votes='votes' :game='game' v-if='showCalc' />
   </div>
 </template>
 
@@ -26,6 +26,13 @@ export default {
       game: db.collection('games').doc(this.$route.params.game),
       users: db.collection('users').where('game', '==', this.$route.params.game).orderBy('side', 'desc').orderBy('score', 'desc'),
       votes: db.collection('votes').where('gameId', '==', this.$route.params.game)
+    }
+  },
+  computed: {
+    showCalc() {
+      if(this.game.state) {
+        return this.game.state.phase == 'calculate'
+      }
     }
   },
   components: {
