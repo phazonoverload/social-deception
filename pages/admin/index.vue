@@ -62,4 +62,7 @@ export default {
 </script>
 
 <style scoped>
+form h2 {
+  margin-bottom: 0.5em;
+}
 </style>

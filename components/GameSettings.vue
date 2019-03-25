@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id='settings'>
     <h2>Game Settings</h2>
     <form @submit.prevent='submitForm'>
       <div class="input-group">

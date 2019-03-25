@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id='players'>
     <h2>Game Players</h2>
     <table>
       <tr>
@@ -42,3 +42,11 @@ export default {
   props: ['users', 'votes']
 }
 </script>
+
+<style scoped>
+#players {
+  border: 2px solid var(--light);
+  padding: 1em;
+  margin-top: 1em;
+}
+</style>

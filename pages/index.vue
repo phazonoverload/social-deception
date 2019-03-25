@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Home</h1>
+    <h1>Let's get started</h1>
     <form @submit.prevent='submitForm'>
       <div class="input-group">
         <label for="game_id">Game name</label>
@@ -88,4 +88,12 @@ export default {
 </script>
 
 <style scoped>
+.first {
+  background: var(--light);
+  padding: 1em;
+  margin-bottom: 1em;
+}
+.first h3 {
+  font-size: 1em;
+}
 </style>
