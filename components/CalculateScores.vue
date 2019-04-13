@@ -55,7 +55,7 @@ export default {
         db.collection('votes').doc(user.vote['.key']).update({ outcome })
         
         // Update user score and scores object
-        db.collection('users').doc(user['.key']).update({
+        await db.collection('users').doc(user['.key']).update({
           score: user.score + outcome.scoreDelta,
           scores: {
             ...user.scores,
