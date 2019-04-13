@@ -4,6 +4,7 @@
   --red: #d31d53;
   --green: #01684f;
   --dark: #222;
+  --dark-alt: #333;
   --light: #f4f4f4;
 }
 
@@ -17,7 +18,8 @@
 html {
   font-family: var(--font);
   line-height: 1.5;
-  color: var(--dark); 
+  color: white; 
+  background: var(--dark)
 }
 
 #page {
@@ -37,7 +39,7 @@ table {
 }
 
 table, th, td {
-  border: 1px solid var(--dark);
+  border: 1px solid var(--dark-alt);
   text-align: left;
 }
 
@@ -46,7 +48,7 @@ th, td {
 }
 
 form {
-  border: 2px solid var(--light);
+  border: 2px solid var(--dark-alt);
   padding: 1em;
   margin-top: 1em;
 }
@@ -79,13 +81,15 @@ form h3 {
   -webkit-appearance: none;
   border: 1px solid grey;
   border-radius: 0;
+  color: var(--dark)
 } 
 
 .radio {
   display: inline-block;
 }
 
-input[type=submit] {
+input[type=submit],
+.btn {
   background: var(--blue);
   color: white;
   padding: 0.5em;
@@ -103,7 +107,7 @@ input[type=submit] {
 }
 
 .radio input + label {
-  background: var(--light);
+  background: var(--dark-alt);
   margin-right: 0;
   display: inline-block;
   padding: 0.25em 0.5em;

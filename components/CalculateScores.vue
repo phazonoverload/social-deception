@@ -5,10 +5,12 @@
       <li 
         v-for='user in this.usersFull' 
         :key='user[".key"]'>
-        <div v-if='user.vote'>
-          <span>Vote: {{user.vote.vote.playerVote.toUpperCase()}},</span>
-          <span>Opp: {{user.vote.outcome.opponentVote.toUpperCase()}}</span>
-          <span>Result: {{user.vote.outcome.resultName.toUpperCase()}}</span>
+        <div v-if='user.vote' class='record'>
+          <span>Seat: {{user.seat}}</span>
+          <span>Side: {{user.side}}</span>
+          <span>P: {{user.vote.vote.playerVote}}</span>
+          <span>O: {{user.vote.outcome.opponentVote}}</span>
+          <span>R: {{user.vote.outcome.resultName}}</span>
         </div>
       </li>
     </ul>
@@ -69,7 +71,15 @@ export default {
         })
       }
       return u;
-    }
+    },
+    // hasCalced() {
+    //   if(this.usersFull.length > 0) {
+    //     if(this.usersFull[0].vote.outcome != {}) {
+    //       return true;
+    //     }
+    //   }
+    //   return false;
+    // }
   },
   props: ['users', 'votes', 'game', 'fire']
 }
@@ -77,12 +87,21 @@ export default {
 
 <style scoped>
 #calcScores {
-  border: 2px solid var(--light);
+  border: 2px solid var(--dark-alt);
   padding: 1em;
   margin-top: 1em;
 }
 li {
   margin-top: 0.5em;
   margin-left: 1.25em;
+}
+ul {
+  margin-bottom: 1em;
+}
+.record {
+  text-transform: uppercase;
+}
+span {
+  margin-right: 0.5em;
 }
 </style>

@@ -59,7 +59,7 @@ footer {
   left: 0;
   display: block;
   width: 100vw;
-  background: var(--dark);
+  background: var(--dark-alt);
   color: white;
   text-align: center;
   padding: 0.5em;

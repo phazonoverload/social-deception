@@ -6,7 +6,7 @@
 
 <style scoped>
 header {
-  background: var(--dark);
+  background: var(--dark-alt);
   color: white;
   padding: 0.5em;
 }

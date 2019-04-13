@@ -45,7 +45,7 @@ export default {
 
 <style scoped>
 #players {
-  border: 2px solid var(--light);
+  border: 2px solid var(--dark-alt);
   padding: 1em;
   margin-top: 1em;
 }

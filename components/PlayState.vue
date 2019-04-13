@@ -34,7 +34,7 @@ p {
   margin-bottom: 1em;
 }
 .rules {
-  background: var(--light);
+  background: var(--dark-alt);
   padding: 1em;
 }
 .rules li {

@@ -89,7 +89,7 @@ export default {
 
 <style scoped>
 .first {
-  background: var(--light);
+  background: var(--dark-alt);
   padding: 1em;
   margin-bottom: 1em;
 }
