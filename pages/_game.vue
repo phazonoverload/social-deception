@@ -40,7 +40,10 @@ export default {
     PlayState,
     VoteState,
     CalculateState
-  }
+  },
+  head () {
+    return { title: `${this.game.name} - ${this.user.name}` }
+  },
 }
 </script>
 

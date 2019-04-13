@@ -39,7 +39,10 @@ export default {
     UserList,
     GameSettings,
     CalculateScores
-  }
+  },
+  head () {
+    return { title: `Admin for ${this.game.name}` }
+  },
 }
 </script>
 

@@ -26,45 +26,30 @@ export default {
           return u.seat == user.seat && u['.key'] != user['.key']
         })[0]
         const v = [user.vote.vote.playerVote.toUpperCase(), opponent.vote.vote.playerVote.toUpperCase()];
+
         let outcome = {};
+        function setOutcome(opponentVote, resultName, scoreDelta) {
+          outcome = { opponentVote, resultName, scoreDelta }
+        }
         if(v[0] == 'C' && v[1] == 'C') {
-          outcome = {
-            opponentVote: v[1],
-            resultName: 'both-coop',
-            scoreDelta: 1
-          }
+          setOutcome(v[1], 'both-coop', 1);
         }
         if(v[0] == 'D' && v[1] == 'D') {
-          outcome = {
-            opponentVote: v[1],
-            resultName: 'both-defect',
-            scoreDelta: -1
-          }
+          setOutcome(v[1], 'both-defect', -1);
         }
         if(v[0] == 'D' && v[1] == 'C') {
-          outcome = {
-            opponentVote: v[1],
-            resultName: 'betray',
-            scoreDelta: 2
-          }
+          setOutcome(v[1], 'betray', 2);
         }
         if(v[0] == 'C' && v[1] == 'D') {
-          outcome = {
-            opponentVote: v[1],
-            resultName: 'sucker',
-            scoreDelta: -2
-          }
+          setOutcome(v[1], 'sucker', -2);
         }
-
-        // db.collection('votes').doc(user.vote['.key']).update({
-        //   outcome
-        // })
+        
+        // Update votes record to contain the outcome
+        db.collection('votes').doc(user.vote['.key']).update({ outcome })
         
         db.collection('users').doc(user['.key']).update({
           scores: {
-            // ...this.4
-            // Need to keep old score  in DB using spread
-            
+            ...user.scores,
             [this.game.state.round]: user.score + outcome.scoreDelta
           }
         })

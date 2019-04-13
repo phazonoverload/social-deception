@@ -46,9 +46,10 @@ export default {
     createGame() {
       this.$firestore.games.add({
         name: this.newGameName,
+        facts: false,
         state: {
           round: 0,
-          phase: 'setup'
+          phase: 'setup',
         },
       }).then(doc => {
         console.log(doc);
