@@ -2,7 +2,7 @@
   <div id='reveal'>
     <h2>Your opponent chose to {{opponentVote}}</h2>
     <p v-if='playerVote'>You chose to {{playerVote}}</p>
-    <p>As a result, you have {{scoreDelta}} point/s</p>
+    <p>As a result, your score has changed by {{scoreDelta}} point/s and should move to seat {{user.seat}}</p>
   </div>
 </template>
 

@@ -69,5 +69,6 @@ footer {
   padding: 0.5em;
   text-transform: uppercase;
   box-sizing: border-box;
+  border-top: 2px solid var(--dark);
 }
 </style>

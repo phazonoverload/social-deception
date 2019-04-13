@@ -14,13 +14,18 @@
         </div>
       </li>
     </ul>
-    <button class='btn' @click='calc'>Calculate Scores</button>
+    <button class='btn' @click='calc' v-if='!hasCalculated'>Calculate Scores</button>
   </div>
 </template>
 
 <script>
 import { db } from '~/plugins/firebase.js'
 export default {
+  data() {
+    return {
+      hasCalculated: false
+    }
+  },
   methods: {
     async calc() {
       for(let user of this.usersFull) {
@@ -49,6 +54,7 @@ export default {
         // Update votes record to contain the outcome
         db.collection('votes').doc(user.vote['.key']).update({ outcome })
         
+        // Update user score and scores object
         db.collection('users').doc(user['.key']).update({
           score: user.score + outcome.scoreDelta,
           scores: {
@@ -57,6 +63,22 @@ export default {
           }
         })
       }
+
+      // Update seat position for each user
+      const usersLeft = this.usersFull.filter(user => user.side == 'left');
+      const usersRight = this.usersFull.filter(user => user.side == 'right');
+      function updateUserListByScore(input) {
+        const l = input.sort((a, b) => (a.score > b.score) ? 1 : -1)
+        for(let [i, user] of l.entries()) {
+          db.collection('users').doc(user['.key']).update({
+            seat: i + 1
+          })
+        }
+      }
+      updateUserListByScore(usersLeft);
+      updateUserListByScore(usersRight);
+
+      this.hasCalculated = true;
     }
   },
   computed: {
