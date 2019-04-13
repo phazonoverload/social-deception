@@ -3,7 +3,7 @@
     <h1>Admin Game Single</h1>
     <GameSettings :game='game' :fire='$firestore' v-if='game.state' />
     <UserList :users='users' :votes='votes' />
-    <CalculateScores :users='users' :votes='votes' :game='game' v-if='showCalc' />
+    <CalculateScores :users='users' :fire='$firestore' :votes='votes' :game='game' v-if='showCalc' />
   </div>
 </template>
 

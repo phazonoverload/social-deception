@@ -1,9 +1,7 @@
 <template>
   <div id='play'>
-    <p>Talk to your partner. At the end of this round, you'll have to make a decision to wither cooperate with them or betray them.</p>
-    <div class="fact">
-      <p>Fact here</p>
-    </div>
+    <p>Talk to your partner. At the end of this round, you'll have to make a decision to either cooperate with them or betray them.</p>
+    <FactGenerator  :game='game' :users='users' :user='user' :votes='votes' />
     <div class="rules">
       <h2>Resolving votes</h2>
       <ul>
@@ -21,24 +19,19 @@
 </template>
 
 <script>
-export default {
+import FactGenerator from '@/components/FactGenerator'
 
+export default {
+  props: ['game', 'users', 'user', 'votes'],
+  components: {
+    FactGenerator
+  }
 }
 </script>
 
 <style scoped>
 p {
   margin-bottom: 1em;
-}
-.fact {
-  background: var(--dark);
-  color: white;
-  padding: 1em 2em;
-  text-align: center;
-  margin-bottom: 1em;
-}
-.fact p {
-  margin-bottom: 0;
 }
 .rules {
   background: var(--light);

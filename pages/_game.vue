@@ -2,7 +2,7 @@
   <div v-if='game.state'>
     <h1>{{game.state.phase}}</h1>
     <SetupState :users='users' v-if='game.state.phase == "setup"' />
-    <PlayState v-if='game.state.phase == "play"' />
+    <PlayState :game='game' :users='users' :user='user' :votes='votes' v-if='game.state.phase == "play"' />
     <VoteState :fire='$firestore' :user='user' :game='game' v-if='game.state.phase == "vote"' />
     <CalculateState v-if='game.state.phase == "calculate"' />
     <footer>
@@ -23,7 +23,8 @@ export default {
     return {
       game: { state: {} },
       user: {},
-      users: []
+      users: [],
+      votes: []
     }
   },
   firestore() {

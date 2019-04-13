@@ -1,7 +1,7 @@
 <template>
   <div id='players'>
     <h2>Game Players</h2>
-    <table>
+    <table v-if='usersFull.length>0'>
       <tr>
         <th>Name</th>
         <th>Score</th>
