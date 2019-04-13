@@ -68,7 +68,17 @@ export default {
       const usersLeft = this.usersFull.filter(user => user.side == 'left');
       const usersRight = this.usersFull.filter(user => user.side == 'right');
       function updateUserListByScore(input) {
-        const l = input.sort((a, b) => (a.score > b.score) ? 1 : -1)
+        const l = input.sort((a, b) => {
+          if(a.score > b.score) { return 1; }
+          if(a.score < b.score) { return -1; }
+          if(a.score == b.score) {
+            let aO = a.scores[a.scores.length-1];
+            let bO = b.scores[b.scores.length-1];
+            if(aO > bO) return 1;
+            if(aO < bO) return -1;
+            return 0;
+          }
+        })
         for(let [i, user] of l.entries()) {
           db.collection('users').doc(user['.key']).update({
             seat: i + 1
