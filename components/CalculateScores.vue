@@ -50,6 +50,7 @@ export default {
         db.collection('votes').doc(user.vote['.key']).update({ outcome })
         
         db.collection('users').doc(user['.key']).update({
+          score: user.score + outcome.scoreDelta,
           scores: {
             ...user.scores,
             [this.game.state.round]: user.score + outcome.scoreDelta
@@ -72,14 +73,6 @@ export default {
       }
       return u;
     },
-    // hasCalced() {
-    //   if(this.usersFull.length > 0) {
-    //     if(this.usersFull[0].vote.outcome != {}) {
-    //       return true;
-    //     }
-    //   }
-    //   return false;
-    // }
   },
   props: ['users', 'votes', 'game', 'fire']
 }

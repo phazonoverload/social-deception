@@ -5,7 +5,9 @@
     <PlayState :game='game' :users='users' :user='user' :votes='votes' v-if='game.state.phase == "play"' />
     <VoteState :fire='$firestore' :user='user' :game='game' v-if='game.state.phase == "vote"' />
     <CalculateState v-if='game.state.phase == "calculate"' />
-    <footer>
+    <RevealState v-if='game.state.phase == "reveal"' :user='user' :votes='votes' :game='game' />
+
+    <footer v-if='game.state.phase != "calculate"'>
       <p>Your score is {{user.score}}</p>
     </footer>
   </div>
@@ -17,6 +19,7 @@ import SetupState from '~/components/SetupState'
 import PlayState from '~/components/PlayState'
 import VoteState from '~/components/VoteState'
 import CalculateState from '~/components/CalculateState'
+import RevealState from '~/components/RevealState'
 
 export default {
   data() {
@@ -39,7 +42,8 @@ export default {
     SetupState,
     PlayState,
     VoteState,
-    CalculateState
+    CalculateState,
+    RevealState
   },
   head () {
     return { title: `${this.game.name} - ${this.user.name}` }
