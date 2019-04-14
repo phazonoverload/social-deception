@@ -52,7 +52,6 @@ export default {
           phase: 'setup',
         },
       }).then(doc => {
-        console.log(doc);
         this.$router.push('/admin/' + doc.id);
         this.$store.dispatch('setGameId', doc.id);
       });

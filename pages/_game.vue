@@ -1,5 +1,5 @@
 <template>
-  <div v-if='game.state'>
+  <div v-if='game.state && users.length > 0 && user.score && votes.length > 0'>
     <h1>{{game.state.phase}}</h1>
     <SetupState :users='users' v-if='game.state.phase == "setup"' />
     <PlayState :game='game' :users='users' :user='user' :votes='votes' v-if='game.state.phase == "play"' />

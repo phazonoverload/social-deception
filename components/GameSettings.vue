@@ -67,7 +67,7 @@ export default {
           phase: this.form.state.phase
         }  
       }).then(() => {
-        alert('Settings updated successfully')
+        this.$toast.success('Updated successfully')
       });
     }
   },

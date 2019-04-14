@@ -61,12 +61,13 @@ export default {
       this.fire.votes.add({
         gameId,
         userId,
+        side,
         userName: name,
         currentScore: score,
-        side,
         round: this.game.state.round,
         vote: { ...this.form },
-        outcome: {}
+        outcome: {},
+        fact: this.$store.state.fact || 'None'
       }).then(() => {
         this.submittedVote = true;
         this.vote = {};
