@@ -2,6 +2,12 @@
   <div>
     <h1>Admin Game Single</h1>
     <GameSettings :game='game' :fire='$firestore' v-if='game.state' />
+    
+    <vac :end-time="new Date().getTime() + 60000" v-if='showCountdown' id='countdown'>
+      <span slot="process" slot-scope="{ timeObj }"><i class="fas fa-clock"></i>{{ `${timeObj.s} seconds` }}</span>
+      <span slot="finish">Discussion time is over.</span>
+    </vac>
+
     <UserList :users='users' :votes='votes' />
     <CalculateScores :users='users' :fire='$firestore' :votes='votes' :game='game' v-if='showCalc' />
   </div>
@@ -33,6 +39,11 @@ export default {
       if(this.game.state) {
         return this.game.state.phase == 'calculate'
       }
+    },
+    showCountdown() {
+      if(this.game.state) {
+        return this.game.state.phase == 'play'
+      }
     }
   },
   components: {
@@ -47,4 +58,16 @@ export default {
 </script>
 
 <style scoped>
+#countdown {
+  background: var(--dark-alt);
+  padding: 1em;
+  text-align: center;
+  display: block;
+  width: 100%;
+  margin-bottom: 1em;
+  margin-top: 1em;
+}
+#countdown i {
+  margin-right: 0.5em;
+}
 </style>
