@@ -89,7 +89,8 @@ form h3 {
 }
 
 input[type=submit],
-.btn {
+.btn,
+button {
   background: var(--blue);
   color: white;
   padding: 0.5em;
