@@ -71,6 +71,11 @@ form h3 {
   margin-bottom: -0.25em;
 }
 
+input {
+  -webkit-appearance: none;
+  border-radius: 0;
+}
+
 .input-group input, 
 .input-group textarea, 
 .input-group select {
