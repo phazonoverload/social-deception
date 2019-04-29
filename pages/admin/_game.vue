@@ -10,6 +10,7 @@
 
     <UserList :users='users' :votes='votes' />
     <CalculateScores :users='users' :fire='$firestore' :votes='votes' :game='game' v-if='showCalc' />
+    <ExportGame :users='users' :votes='votes' :game='game' />
   </div>
 </template>
 
@@ -18,6 +19,7 @@ import { db } from '~/plugins/firebase.js'
 import UserList from '~/components/UserList'
 import GameSettings from '~/components/GameSettings'
 import CalculateScores from '~/components/CalculateScores'
+import ExportGame from '~/components/ExportGame'
 
 export default {
   data() {
@@ -49,7 +51,8 @@ export default {
   components: {
     UserList,
     GameSettings,
-    CalculateScores
+    CalculateScores,
+    ExportGame
   },
   head () {
     return { title: `Admin for ${this.game.name}` }
