@@ -1,5 +1,5 @@
 <template>
-  <div v-if='game.state && users.length > 0 && user.score && votes.length > 0'>
+  <div v-if='game.state && users.length > 0 && votes.length > 0'>
     <h1>{{game.state.phase}}</h1>
     <SetupState :users='users' v-if='game.state.phase == "setup"' />
     <PlayState :game='game' :users='users' :user='user' :votes='votes' v-if='game.state.phase == "play"' />
@@ -8,7 +8,7 @@
     <RevealState v-if='game.state.phase == "reveal"' :user='user' :votes='votes' :game='game' />
 
     <footer v-if='game.state.phase != "calculate"'>
-      <p>Your score is {{user.score}}</p>
+      <p>Round {{game.state.round}}. Your score is {{user.score}}</p>
     </footer>
   </div>
 </template>
