@@ -4,7 +4,7 @@
     <form @submit.prevent='submitForm'>
       <div class="input-group">
         <label for="game_id">Game name</label>
-        <select id="game_id" v-model="gameId">
+        <select id="game_id" v-model="gameId" required>
           <option v-for="op in games" :key="op['.key']" :value="op['.key']">{{op.name}}</option>
         </select>
       </div>
@@ -13,17 +13,16 @@
         <input type="text" v-model="userId" id="user-id" required>
       </div>
       <div class="first">
-        <h3>Only if joining for the first time</h3>
         <div class="input-group">
-          <label for="side">Initial table side</label>
-          <select id="side" v-model="side">
+          <label for="side">Table side</label>
+          <select id="side" v-model="side" required>
             <option>left</option>
             <option>right</option>
           </select>
         </div>
         <div class="input-group">
-          <label for="score">Initial score</label>
-          <input type="number" v-model='score'>
+          <label for="score">Score</label>
+          <input type="number" v-model='score' required>
         </div>
       </div>
       <input type="submit" value='Enter game'>

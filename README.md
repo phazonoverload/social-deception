@@ -1,20 +1,28 @@
-# axelrod
+# Axelrod Game Client
 
 ## Build Setup
 
+### Provide Firebase Credentials
+
+Rename `plugins/firebase.example.js` to `plugins/firebase.js` and fill in the blanks strings.
+
+## Install Dependencies
+
 ``` bash
-# install dependencies
 $ npm install
+```
 
-# serve with hot reload at localhost:3000
+## Serve and hot reload at localhost:3000
+
+``` bash
 $ npm run dev
+```
 
-# build for production and launch server
+## Build for prod and launch server
+
+``` bash
 $ npm run build
 $ npm start
-
-# generate static project
-$ npm run generate
 ```
 
 ## Force Push
