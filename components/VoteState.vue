@@ -47,6 +47,12 @@
 
 <script>
 export default {
+  created() {
+    this.submittedVote = this.votes.filter(vote => {
+      return vote.userName == this.user.name && 
+             vote.round == this.game.state.round
+    }).length > 0;
+  },
   data() {
     return {
       submittedVote: false,
@@ -74,7 +80,7 @@ export default {
       })
     }
   },
-  props: ['user', 'fire', 'game']
+  props: ['user', 'fire', 'game', 'votes']
 }
 </script>
 

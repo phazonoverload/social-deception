@@ -3,7 +3,7 @@
     <h1>{{game.state.phase}}</h1>
     <SetupState :users='users' v-if='game.state.phase == "setup"' />
     <PlayState :game='game' :users='users' :user='user' :votes='votes' v-if='game.state.phase == "play"' />
-    <VoteState :fire='$firestore' :user='user' :game='game' v-if='game.state.phase == "vote"' />
+    <VoteState :fire='$firestore' :user='user' :game='game' :votes='votes' v-if='game.state.phase == "vote"' />
     <CalculateState v-if='game.state.phase == "calculate"' />
     <RevealState v-if='game.state.phase == "reveal"' :user='user' :votes='votes' :game='game' />
 
