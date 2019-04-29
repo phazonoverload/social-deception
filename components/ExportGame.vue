@@ -12,7 +12,7 @@
       </vue-json-to-csv>
     </div>
     <div class="votes">
-      <h3 @click='showVotes = !showVotes'>Toggle Game</h3>
+      <h3 @click='showVotes = !showVotes'>Toggle Votes</h3>
       <pre v-if='showVotes'>{{JSON.stringify(votes, null, 2)}}</pre>
       <vue-json-to-csv :json-data="flatten(votes)" :csv-title="'axelrod-votes-' + this.unix()" >
         <button>Download Votes as CSV</button> 
