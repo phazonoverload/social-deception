@@ -48,9 +48,9 @@ export default {
       const numberOfCooperations = usersVotingRecord.filter(vote => vote.vote.playerVote == 'c').length;
       const percentageCooperations = (100/numberOfVotes) * numberOfCooperations;
       if(percentageCooperations >= 50) {
-        return `Your opponent has cooperated in ${percentageCooperations}% of rounds so far.`
-      } else {
-        return `Your opponent has defected in ${100 - percentageCooperations}% of rounds so far.`
+        return `Your opponent has cooperated in ${parseInt(percentageCooperations)}% of rounds so far.`
+        } else {
+        return `Your opponent has defected in ${100 - parseInt(percentageCooperations)}% of rounds so far.`
       }
     },
     scoreOfOpponent() {
@@ -64,12 +64,12 @@ export default {
     },
     getUserOtherSideSameSeat() {
       return this.users.filter(user => {
-        return user.seat == 1 && user.side != this.user.side;
+        return user.seat == this.user.seat && user.side != this.user.side;
       })[0]
     },
     getUserIdOtherSideSameSeat() {
       return this.users.filter(user => {
-        return user.seat == 1 && user.side != this.user.side;
+        return user.seat == this.user.seat && user.side != this.user.side;
       })[0]['.key'];
     },
     getUsersVotingRecord(userId) {
