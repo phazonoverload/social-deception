@@ -81,7 +81,8 @@ form h3 {
   -webkit-appearance: none;
   border: 1px solid grey;
   border-radius: 0;
-  color: var(--dark)
+  color: var(--dark);
+  background: white;
 } 
 
 .radio {
