@@ -50,8 +50,9 @@ export default {
   created() {
     this.submittedVote = this.votes.filter(vote => {
       return vote.userName == this.user.name && 
-             vote.round == this.game.state.round
-    }).length > 0;
+             vote.round == this.game.state.round &&
+             vote.gameId == this.game['.key']
+    }).length > 0
   },
   data() {
     return {
