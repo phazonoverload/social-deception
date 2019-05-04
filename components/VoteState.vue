@@ -62,7 +62,7 @@ export default {
   methods: {
     submitForm() {
       const { gameId, userId } = this.$store.state;
-      const { name, score, side } = this.user
+      const { name, score, side, seat } = this.user
 
       this.fire.votes.add({
         gameId,
@@ -71,6 +71,7 @@ export default {
         userName: name,
         currentScore: score,
         round: this.game.state.round,
+        currentSeat: seat,
         vote: { ...this.form },
         outcome: {},
         fact: this.$store.state.fact || 'None'
