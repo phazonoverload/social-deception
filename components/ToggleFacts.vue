@@ -22,6 +22,7 @@
         </td>
         <td>
           <select @change="factType($event, user['.key'])">
+            <option>Please choose a fact type</option>
             <option v-for='fact in factTypes' :key='fact.value' :value="fact.value">{{fact.label}}</option>
           </select>
         </td>

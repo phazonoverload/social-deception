@@ -20,7 +20,7 @@ export default {
         fact = this.scoreOfOpponent();
         break;
       case('one-seat-down-score'):
-        fact = this.scoreSameSideOneSeatDown()
+        fact = this.scoreSameSideOneSeatDelta()
         break;
       case('opponent-last-three'):
         fact  = this.opponentLastThreeRounds();
@@ -53,9 +53,14 @@ export default {
       return 'Your opponent\'s seat position record is \n\n' + usersSeatRecord;
       return true;
     },
-    scoreSameSideOneSeatDown() {
-      const userOneDown = this.getUserSameSideOneSeatDown();
-      return 'The player one seat down from you has the score: ' + userOneDown.score;
+    scoreSameSideOneSeatDelta() {
+      if(this.user.seat == 1) {
+        const userUp = this.getUserSameSideOneSeatUp();
+        return 'The player one seat up from you has the score: ' + userUp.score;
+      } else {
+        const userDown = this.getUserSameSideOneSeatDown();
+        return 'The player one seat down from you has the score: ' + userDown.score;
+      }
     },
     votingRecordOfOpponent() {
       const userOppositeId = this.getUserIdOtherSideSameSeat();
@@ -84,6 +89,11 @@ export default {
     getUserSameSideOneSeatDown() {
       return this.users.filter(user => {
         return user.seat == this.user.seat-1 && user.side == this.user.side;
+      })[0];
+    },
+    getUserSameSideOneSeatUp() {
+      return this.users.filter(user => {
+        return user.seat == this.user.seat+1 && user.side == this.user.side;
       })[0];
     },
     getUserOtherSideSameSeat() {
