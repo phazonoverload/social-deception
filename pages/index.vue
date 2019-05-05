@@ -40,8 +40,10 @@ export default {
       userId: '',
       side: '',
       score: '',
+      facts: false,
+      factType: '',
       games: [],
-      users: []
+      users: [],
     }
   },
   firestore() {
@@ -53,7 +55,7 @@ export default {
   methods: {
     async submitForm() {
       this.userId = this.userId.toUpperCase();
-      const { gameId, userId, side, score } = this;
+      const { gameId, userId, side, score, facts, factType } = this;
       const userExistsInGame = this.userExistsInGame(gameId, userId);
       if(userExistsInGame) {
         this.enterLobby(gameId, userExistsInGame);
@@ -65,6 +67,8 @@ export default {
           score: s,
           side: side,
           seat: s,
+          facts,
+          factType,
           scores: { 0: s }
         }).then(res => {
           this.enterLobby(gameId, res.id);

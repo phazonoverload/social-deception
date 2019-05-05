@@ -10,6 +10,7 @@
 
     <UserList :users='users' :votes='votes' />
     <CalculateScores :users='users' :fire='$firestore' :votes='votes' :game='game' v-if='showCalc' />
+    <ToggleFacts :users='users' :fire='$firestore' />
     <ExportGame :users='users' :votes='votes' :game='game' />
   </div>
 </template>
@@ -20,6 +21,7 @@ import UserList from '~/components/UserList'
 import GameSettings from '~/components/GameSettings'
 import CalculateScores from '~/components/CalculateScores'
 import ExportGame from '~/components/ExportGame'
+import ToggleFacts from '~/components/ToggleFacts'
 
 export default {
   data() {
@@ -52,7 +54,8 @@ export default {
     UserList,
     GameSettings,
     CalculateScores,
-    ExportGame
+    ExportGame,
+    ToggleFacts
   },
   head () {
     return { title: `Admin for ${this.game.name}` }

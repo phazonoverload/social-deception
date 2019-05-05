@@ -33,7 +33,7 @@
           <label for="reveal">Reveal</label>
         </div>
       </div>
-      <div class="input-group">
+      <!-- <div class="input-group">
         <label for="show-facts">Show Facts</label>
         <div class="radio">
           <input type="radio" value="true" id="true" v-model="form.facts">
@@ -43,7 +43,7 @@
           <input type="radio" value="false" id="false" v-model="form.facts">
           <label for="false">No</label>
         </div>
-      </div>
+      </div> -->
       <input type="submit" value='Update Game'>
     </form>
   </div>
@@ -61,7 +61,7 @@ export default {
       this.fire.game.update({ 
         name: this.form.name,
         seats: parseInt(this.form.seats),
-        facts: JSON.parse(this.form.facts),
+        // facts: JSON.parse(this.form.facts),
         state: {
           round: parseInt(this.form.state.round),
           phase: this.form.state.phase
