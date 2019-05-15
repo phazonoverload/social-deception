@@ -23,14 +23,15 @@
 <script>
 export default {
   computed: {
+    // Combine a user's votes with their user record
     usersFull() {
       let u = []
       for(let user of this.users) {
         const userVotes = this.votes.filter(vote => {
           return vote.userId == user['.key']
-        })
-        .sort((a, b) => (a.round > b.round) ? 1 : -1)
-        .map(e => `[${e.round}: ${e.vote.playerVote}]`).join(', ').toUpperCase();
+        }).sort((a, b) => (a.round > b.round) ? 1 : -1)
+          .map(e => `[${e.round}: ${e.vote.playerVote}]`)
+          .join(', ').toUpperCase();
         u.push({
           ...user,
           votes: userVotes

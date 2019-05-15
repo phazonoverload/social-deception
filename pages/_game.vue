@@ -7,6 +7,7 @@
     <CalculateState v-if='game.state.phase == "calculate"' />
     <RevealState v-if='game.state.phase == "reveal"' :user='user' :votes='votes' :game='game' />
 
+    <!-- Hide footer during calcuation phase -->
     <footer v-if='game.state.phase != "calculate"'>
       <p>Round {{game.state.round}}. Your score is {{user.score}}</p>
     </footer>

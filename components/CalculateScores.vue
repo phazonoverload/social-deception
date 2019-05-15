@@ -1,6 +1,8 @@
 <template>
   <div id='calcScores'>
     <h2>Calc Scores for Round {{game.state.round}}</h2>
+    
+    <!-- v-if is used to only load this list if the data has been loaded from database -->
     <ul v-if='this.usersFull.length > 0'>
       <li 
         v-for='user in this.usersFull' 
@@ -14,6 +16,8 @@
         </div>
       </li>
     </ul>
+
+    <!-- Only show button if scores haven't already been calculated -->
     <button class='btn' @click='calc' v-if='!hasCalculated'>Calculate Scores</button>
   </div>
 </template>
@@ -28,16 +32,22 @@ export default {
   },
   methods: {
     async calc() {
+      // Hide button
+      this.hasCalculated = true;
+
+      // For each user
       for(let user of this.usersFull) {
+        // Find their opponent
         const opponent = this.usersFull.filter(u => {
           return u.seat == user.seat && u['.key'] != user['.key']
         })[0]
+
+        // Create an array where the first item is the current users vote, and the second is their opponent's vote
         const v = [user.vote.vote.playerVote.toUpperCase(), opponent.vote.vote.playerVote.toUpperCase()];
 
         let outcome = {};
-        function setOutcome(opponentVote, resultName, scoreDelta) {
-          outcome = { opponentVote, resultName, scoreDelta }
-        }
+
+        // Based on results, put some data in the the outcome object above 
         if(v[0] == 'C' && v[1] == 'C') {
           setOutcome(v[1], 'both-coop', 1);
         }
@@ -62,6 +72,11 @@ export default {
             [this.game.state.round]: user.score + outcome.scoreDelta
           }
         })
+
+        // Utility function to set the outcome object with a set of provided values 
+        function setOutcome(opponentVote, resultName, scoreDelta) {
+          outcome = { opponentVote, resultName, scoreDelta }
+        }
       }
 
       // Update seat position for each user
@@ -87,11 +102,10 @@ export default {
       }
       updateUserListByScore(usersLeft);
       updateUserListByScore(usersRight);
-
-      this.hasCalculated = true;
     }
   },
   computed: {
+    // Combine a user's votes with their user record
     usersFull() {
       let u = []
       for(let user of this.users) {

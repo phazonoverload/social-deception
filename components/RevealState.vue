@@ -24,6 +24,7 @@ export default {
       return false;
     },
     scoreDelta() {
+      // Return the difference in score (-2, -1, 1, 2)
       const v = this.votes.filter(vote => {
         return vote.userId == this.user['.key'] && vote.round == this.game.state.round
       })[0];

@@ -2,7 +2,8 @@
   <div>
     <h1>Admin Game Single</h1>
     <GameSettings :game='game' :fire='$firestore' v-if='game.state' />
-    
+  
+    <!-- Only show the countdown during the play phase -->
     <vac :end-time="new Date().getTime() + 60000" v-if='showCountdown' id='countdown'>
       <span slot="process" slot-scope="{ timeObj }"><i class="fas fa-clock"></i>{{ `${timeObj.s} seconds` }}</span>
       <span slot="finish">Discussion time is over.</span>
@@ -32,6 +33,7 @@ export default {
     }
   },
   firestore() {
+    // Database connections
     return {
       game: db.collection('games').doc(this.$route.params.game),
       users: db.collection('users').where('game', '==', this.$route.params.game).orderBy('side', 'desc').orderBy('score', 'desc'),

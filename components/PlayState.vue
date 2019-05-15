@@ -1,11 +1,15 @@
 <template>
   <div id='play'>
     <p>Talk to your partner. At the end of this round, you'll have to make a decision to either cooperate with them or betray them.</p>
+    <!-- If the user has facts turned on, show the FactGenerator -->
     <FactGenerator :game='game' :users='users' :user='user' :votes='votes' v-if='user.facts' />
+
+    <!-- Countdown clock for 60 seconds -->
     <countdown :end-time="new Date().getTime() + 60000" id='countdown'>
       <span slot="process" slot-scope="{ timeObj }"><i class="fas fa-clock"></i>{{ `${timeObj.s} seconds` }}</span>
       <span slot="finish">Discussion time is over.</span>
     </countdown>
+  
     <div class="rules">
       <h2>Resolving votes</h2>
       <ul>

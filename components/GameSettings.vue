@@ -1,7 +1,7 @@
 <template>
   <div id='settings'>
-    <h2>Game Settings</h2>
     <form @submit.prevent='submitForm'>
+      <h2>Game Settings</h2>
       <div class="input-group">
         <label for="game-name">Name</label>
         <input type="text" v-model="form.name" id="game-name">
@@ -33,17 +33,6 @@
           <label for="reveal">Reveal</label>
         </div>
       </div>
-      <!-- <div class="input-group">
-        <label for="show-facts">Show Facts</label>
-        <div class="radio">
-          <input type="radio" value="true" id="true" v-model="form.facts">
-          <label for="true">Yes</label>
-        </div>
-        <div class="radio">
-          <input type="radio" value="false" id="false" v-model="form.facts">
-          <label for="false">No</label>
-        </div>
-      </div> -->
       <input type="submit" value='Update Game'>
     </form>
   </div>
@@ -57,11 +46,12 @@ export default {
     }
   },
   methods: {
+    // Update entry for the current game when submitted
+    // Then push a toast message for visual confirmation
     submitForm() {
       this.fire.game.update({ 
         name: this.form.name,
         seats: parseInt(this.form.seats),
-        // facts: JSON.parse(this.form.facts),
         state: {
           round: parseInt(this.form.state.round),
           phase: this.form.state.phase

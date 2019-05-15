@@ -1,10 +1,14 @@
 # Axelrod Game Client
 
+## What to draw your attention to
+
+All files in this repository do something, but the bulk of the work is in the `components` and `pages` directories.
+
 ## Build Setup
 
 ### Provide Firebase Credentials
 
-Rename `plugins/firebase.example.js` to `plugins/firebase.js` and fill in the blanks strings.
+Rename `plugins/firebase.example.js` to `plugins/firebase.js` and fill in the blanks strings from your Firebase settings.
 
 ## Install Dependencies
 

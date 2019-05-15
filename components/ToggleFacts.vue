@@ -1,6 +1,7 @@
 <template>
   <div id='facts'>
     <h2>Toggle facts</h2>
+    <!-- Only show table if users has been loaded in from the database -->
     <table v-if='users.length>0'>
       <tr>
         <th>Name</th>
@@ -21,6 +22,7 @@
           <button @click="facts(user['.key'], false)">Hide</button>
         </td>
         <td>
+          <!-- When the select changes, run the method right away -->
           <select @change="factType($event, user['.key'])">
             <option>Please choose a fact type</option>
             <option v-for='fact in factTypes' :key='fact.value' :value="fact.value">{{fact.label}}</option>
@@ -36,6 +38,7 @@ import { db } from '~/plugins/firebase.js'
 export default {
   data() {
     return {
+      // All of the available fact types, to populate the dropdown
       factTypes: [
         { label: 'Voting Record of Opponent', value: 'opponent-voting-record' },
         { label: 'Percentage Breakdown of Opponent', value: 'opponent-percentage-breakdown' },
@@ -47,6 +50,7 @@ export default {
     }
   },
   methods: {
+    // Update user record with facts true/false
     facts(user, bool) {
       db.collection('users').doc(user).update({
         facts: bool
@@ -54,6 +58,7 @@ export default {
         this.$toast.success('Updated successfully')
       })
     },
+    // Update user record with fact type
     factType(event, user) {
       db.collection('users').doc(user).update({
         factType: event.target.value

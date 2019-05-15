@@ -1,4 +1,9 @@
 <template>
+  <!-- NOTE -->
+  <!-- NOTE -->
+  <!-- THIS COMPONENT IS UNFINISHED AND UNUSED -->
+  <!-- NOTE -->
+  <!-- NOTE -->
   <div id='strategy'>
     <div class="top">
       <h2 @click='show = !show'>Toggle strategies at round {{round}}</h2>

@@ -48,6 +48,7 @@
 <script>
 export default {
   created() {
+    // Check if a vote already exists, if so, set submittedVote to true, which will hide the form
     this.submittedVote = this.votes.filter(vote => {
       return vote.userName == this.user.name && 
              vote.round == this.game.state.round &&
@@ -62,6 +63,7 @@ export default {
   },
   methods: {
     submitForm() {
+      // Grab data from the vuex store and the userrecord, and combine with form data. Add a new databse entry.
       const { gameId, userId } = this.$store.state;
       const { name, score, side, seat } = this.user
 
