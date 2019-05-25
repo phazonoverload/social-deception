@@ -159,6 +159,7 @@ export default {
 .fact pre {
   margin-bottom: 0;
   font-size: 1em;
-  overflow-x: scroll;
+  overflow-x: auto;
+  white-space: pre-wrap;
 }
 </style>
